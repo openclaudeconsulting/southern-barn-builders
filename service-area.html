@@ -17,15 +17,93 @@
 <meta name="twitter:card" content="summary_large_image" />
 <style>
   .map-section { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .map-visual { position: relative; }
-  .map-visual svg { display: block; width: 100%; max-width: 520px; margin: 0 auto; height: auto; }
-  .map-info { display: flex; flex-direction: column; gap: 24px; }
+  .map-visual {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    min-height: 480px;
+  }
+  .map-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    inset: 0;
+    display: block;
+  }
+  .map-visual-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(30,49,25,0.82) 0%, rgba(92,15,15,0.7) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    text-align: center;
+    gap: 16px;
+  }
+  .map-visual-overlay .pin-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--sb-gold);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    margin-bottom: 8px;
+  }
+  .map-visual-overlay .pin-icon span {
+    transform: rotate(45deg);
+    font-family: var(--font-serif);
+    font-weight: 700;
+    color: var(--sb-green-dark);
+    font-size: 1.1rem;
+  }
+  .map-visual-overlay .pin-label {
+    color: var(--sb-cream);
+    font-family: var(--font-serif);
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .map-visual-overlay .pin-sub {
+    color: rgba(247,241,227,0.7);
+    font-size: 0.88rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .map-visual-overlay .state-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .map-visual-overlay .state-badge {
+    padding: 6px 16px;
+    border: 1px solid rgba(247,241,227,0.3);
+    border-radius: 4px;
+    color: var(--sb-cream);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .map-info { display: flex; flex-direction: column; gap: 20px; }
   .map-card {
     background: #fff;
     border-radius: 8px;
     padding: 28px 24px;
     border: 1px solid rgba(216,205,179,0.5);
     box-shadow: 0 4px 24px rgba(107,68,35,0.08);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .map-card:hover {
+    box-shadow: 0 8px 32px rgba(107,68,35,0.14);
+    transform: translateY(-2px);
   }
   .map-card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.15rem; }
   .map-card .region-tag {
@@ -43,58 +121,9 @@
   .map-card .region-tag.hq { background: rgba(201,162,39,0.15); color: #8a7518; }
   .map-card p { color: #5c5143; margin: 0; font-size: 0.95rem; line-height: 1.65; }
 
-  /* SVG map styles */
-  .svg-state-fl {
-    fill: #8a1c1c;
-    fill-opacity: 0.12;
-    stroke: #8a1c1c;
-    stroke-width: 2;
-    transition: fill-opacity 0.3s ease;
-  }
-  .svg-state-fl:hover { fill-opacity: 0.22; }
-  .svg-state-ga {
-    fill: #2f4a2a;
-    fill-opacity: 0.12;
-    stroke: #2f4a2a;
-    stroke-width: 2;
-    transition: fill-opacity 0.3s ease;
-  }
-  .svg-state-ga:hover { fill-opacity: 0.22; }
-  .svg-state-other {
-    fill: none;
-    stroke: #d8cdb3;
-    stroke-width: 1;
-    stroke-dasharray: 4 3;
-  }
-  .svg-label {
-    font-family: "Outfit", sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    fill: #5c5143;
-  }
-  .svg-hq-ring {
-    fill: none;
-    stroke: #c9a227;
-    stroke-width: 2;
-  }
-  .svg-hq-dot { fill: #c9a227; }
-  .svg-hq-pulse {
-    fill: none;
-    stroke: #c9a227;
-    stroke-width: 1;
-    animation: hq-pulse 2s ease-out infinite;
-  }
-  @keyframes hq-pulse {
-    0% { r: 6; opacity: 0.8; }
-    100% { r: 20; opacity: 0; }
-  }
-  .svg-connector { stroke: #b8a983; stroke-width: 1; stroke-dasharray: 3 2; }
-
   @media (max-width: 880px) {
     .map-section { grid-template-columns: 1fr; }
-    .map-visual svg { max-width: 400px; }
+    .map-visual { min-height: 320px; }
   }
 </style>
 </head>
@@ -156,58 +185,16 @@
 
     <div class="map-section reveal">
       <div class="map-visual">
-        <svg viewBox="0 0 440 580" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Service area map showing Florida and South Georgia">
-          <!-- Georgia (simplified realistic outline) -->
-          <path class="svg-state-ga" d="
-            M130,10 L310,10 L330,15 L350,25 L365,40 L370,55
-            L372,75 L368,95 L360,115 L355,135 L350,155 L348,170
-            L345,185 L340,195 L335,200 L325,205 L310,208
-            L295,210 L280,212 L265,215 L250,218 L235,220
-            L220,222 L205,223 L190,224 L175,225
-            L160,224 L145,222 L132,218 L125,210 L120,195
-            L118,180 L117,165 L118,150 L120,135
-            L122,120 L124,105 L126,85 L127,65
-            L128,45 L129,25 Z" />
-
-          <!-- Florida (simplified realistic outline) -->
-          <path class="svg-state-fl" d="
-            M50,225 L100,224 L120,224 L175,225 L205,223
-            L235,220 L265,215 L295,210 L325,205
-            L340,210 L348,220 L350,232 L345,245
-            L335,255 L320,262 L308,270 L298,280
-            L292,292 L288,305 L286,320 L287,335
-            L290,350 L296,365 L304,378 L312,390
-            L320,402 L326,415 L330,428 L332,440
-            L330,452 L325,462 L318,470 L308,476
-            L296,478 L284,475 L274,468 L265,458
-            L256,445 L248,430 L240,415 L232,400
-            L224,386 L216,374 L208,364 L198,355
-            L186,348 L174,342 L160,338 L148,335
-            L135,330 L122,324 L110,316 L98,306
-            L86,295 L76,282 L66,268 L58,255
-            L52,242 L50,230 Z" />
-
-          <!-- Neighboring states (subtle dashed outlines) -->
-          <path class="svg-state-other" d="M50,10 L130,10 L128,45 L127,65 L126,85 L124,105 L122,120 L118,150 L117,165 L118,180 L120,195 L125,210 L120,224 L100,224 L50,225 Z" />
-          <path class="svg-state-other" d="M310,10 L400,10 L400,100 L395,120 L385,145 L372,165 L365,175 L355,190 L348,200 L348,170 L350,155 L355,135 L360,115 L368,95 L372,75 L370,55 L365,40 L350,25 L330,15 Z" />
-
-          <!-- State labels (positioned outside, connected by lines) -->
-          <line class="svg-connector" x1="230" y1="165" x2="230" y2="140" />
-          <text x="230" y="133" text-anchor="middle" class="svg-label">Georgia</text>
-
-          <line class="svg-connector" x1="260" y1="350" x2="260" y2="325" />
-          <text x="260" y="318" text-anchor="middle" class="svg-label">Florida</text>
-
-          <text x="85" y="140" text-anchor="middle" class="svg-label" style="fill:#b8a983; font-size:9px; letter-spacing:1.5px;">AL</text>
-          <text x="385" y="90" text-anchor="middle" class="svg-label" style="fill:#b8a983; font-size:9px; letter-spacing:1.5px;">SC</text>
-
-          <!-- HQ Pin (SW Florida) with pulse -->
-          <circle class="svg-hq-pulse" cx="230" cy="415" r="6" />
-          <circle class="svg-hq-ring" cx="230" cy="415" r="10" />
-          <circle class="svg-hq-dot" cx="230" cy="415" r="5" />
-          <line class="svg-connector" x1="230" y1="428" x2="230" y2="448" />
-          <text x="230" y="462" text-anchor="middle" class="svg-label" style="fill:#8a7518; font-size:10px;">HQ</text>
-        </svg>
+        <img src="images/IMG_0692.jpg" alt="Large completed pole barn on open Southern land" loading="lazy" />
+        <div class="map-visual-overlay">
+          <div class="pin-icon"><span>SB</span></div>
+          <div class="pin-label">Southwest Florida<br/>to South Georgia</div>
+          <div class="pin-sub">Headquartered in SW Florida</div>
+          <div class="state-badges">
+            <span class="state-badge">All of FL</span>
+            <span class="state-badge">South GA</span>
+          </div>
+        </div>
       </div>
 
       <div class="map-info">
