@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Service Area | Southern Barn Builders LLC</title>
+<meta name="description" content="Southern Barn Builders serves all of Florida and South Georgia -- from the Keys to the Panhandle and up into Valdosta, Tifton, Waycross, and beyond." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+<meta property="og:site_name" content="Southern Barn Builders LLC" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Service Area | Southern Barn Builders LLC" />
+<meta property="og:description" content="Headquartered in Southwest Florida, serving every county in Florida and reaching up into South Georgia." />
+<meta name="twitter:card" content="summary_large_image" />
+<style>
+  .map-states { display:block; margin:0 auto; max-width: 760px; }
+  .state-fl { fill: #8a1c1c; stroke: #5c0f0f; stroke-width: 2; }
+  .state-ga { fill: #2f4a2a; stroke: #1e3119; stroke-width: 2; }
+  .state-other { fill: #e6dcc2; stroke: #b8a983; stroke-width: 1; }
+  .hq-pin { fill: #c9a227; stroke: #1e3119; stroke-width: 2; }
+  .hq-label { font-family: "Playfair Display", serif; font-size: 18px; fill: #1a1a1a; font-weight: 700; }
+  .state-label { font-family: "Playfair Display", serif; font-size: 22px; fill: #fdf8ec; font-weight: 700; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="container">
+    <span>(941) 273-2599 &nbsp;|&nbsp; openclaudeconsulting@gmail.com</span>
+    <span>Licensed &amp; Insured &middot; Serving FL &amp; GA</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SB</span>
+      <span>
+        <span class="brand-name">Southern Barn Builders</span><br/>
+        <span class="brand-tag">Built Southern Strong &middot; Est. Florida</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="document.querySelector('.main-nav').classList.toggle('open');document.querySelector('.nav-overlay').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='false')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-overlay" onclick="document.querySelector('.main-nav').classList.remove('open');this.classList.remove('open');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false')"></div>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="service-area.html" class="active">Service Area</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a class="nav-cta" href="contact.html">Free Quote</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="container">
+    <span class="hero-badge">FL + GA</span>
+    <h1>Where We Build</h1>
+    <p>Headquartered in Southwest Florida, serving every county in the Sunshine State and stretching up into South Georgia.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-kicker">Coverage</div>
+      <h2>Two States. One Crew.</h2>
+      <span class="divider"></span>
+    </div>
+
+    <div class="map-wrap reveal">
+      <svg class="map-states" viewBox="0 0 700 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Service area map of Florida and Georgia">
+        <path class="state-other" d="M0,180 L200,180 L200,260 L0,260 Z" />
+        <text x="100" y="228" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" fill="#7a6e52">Alabama</text>
+        <path class="state-other" d="M560,80 L700,80 L700,220 L560,220 Z" />
+        <text x="630" y="158" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" fill="#7a6e52">South Carolina</text>
+        <path class="state-ga" d="M200,80 L560,80 L560,220 L520,240 L480,260 L430,260 L430,275 L200,275 Z" />
+        <text x="360" y="175" text-anchor="middle" class="state-label">GEORGIA</text>
+        <path class="state-fl" d="
+          M200,275 L430,275 L430,310 L400,325 L360,335 L330,340 L330,380
+          L345,420 L360,460 L370,490 L360,505 L340,510 L320,495
+          L305,465 L295,430 L285,395 L270,365 L250,340 L220,325 L200,315 Z" />
+        <text x="330" y="410" text-anchor="middle" class="state-label">FLORIDA</text>
+        <circle class="hq-pin" cx="310" cy="450" r="10"/>
+        <line x1="310" y1="450" x2="310" y2="478" stroke="#1e3119" stroke-width="2"/>
+        <text x="310" y="495" text-anchor="middle" class="hq-label">HQ &middot; SW Florida</text>
+      </svg>
+    </div>
+
+    <div class="legend-box">
+      <span><span class="legend-swatch" style="background:#8a1c1c;"></span>Florida &middot; All counties</span>
+      <span><span class="legend-swatch" style="background:#2f4a2a;"></span>South Georgia &middot; Select counties</span>
+      <span><span class="legend-swatch" style="background:#c9a227;"></span>Headquarters</span>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-kicker">Florida Regions</div>
+      <h2>All of Florida -- Panhandle to the Keys</h2>
+      <span class="divider"></span>
+    </div>
+    <ul class="region-list reveal">
+      <li>Fort Myers / SW Florida</li>
+      <li>Naples &amp; Collier County</li>
+      <li>Tampa Bay Area</li>
+      <li>Sarasota / Bradenton</li>
+      <li>Ocala &amp; Marion County</li>
+      <li>Orlando / Central FL</li>
+      <li>Gainesville</li>
+      <li>Jacksonville / NE FL</li>
+      <li>Tallahassee / Panhandle</li>
+      <li>Pensacola</li>
+      <li>West Palm / Wellington</li>
+      <li>Fort Lauderdale</li>
+      <li>Miami-Dade</li>
+      <li>LaBelle / Hendry County</li>
+      <li>Okeechobee</li>
+      <li>Brooksville / Nature Coast</li>
+    </ul>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container">
+    <div class="section-title reveal">
+      <div class="section-kicker">Georgia Regions</div>
+      <h2>South Georgia &amp; Beyond</h2>
+      <span class="divider"></span>
+    </div>
+    <ul class="region-list reveal">
+      <li>Valdosta</li>
+      <li>Tifton</li>
+      <li>Waycross</li>
+      <li>Thomasville</li>
+      <li>Albany</li>
+      <li>Moultrie</li>
+      <li>Douglas</li>
+      <li>Brunswick</li>
+      <li>Statesboro</li>
+      <li>Vidalia</li>
+      <li>Adel</li>
+      <li>Fitzgerald</li>
+    </ul>
+    <p class="text-center lead" style="margin-top:32px;">Don't see your town? Reach out anyway -- we travel for the right project.</p>
+  </div>
+</section>
+
+<section class="cta-banner">
+  <div class="container">
+    <h2>Florida or Georgia -- We'll Be There.</h2>
+    <p>One call starts it all. Tell us where your land is and we'll let you know when we can walk it.</p>
+    <a href="contact.html" class="btn btn-light">Request a Quote</a>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid-3">
+      <div>
+        <h4>Southern Barn Builders LLC</h4>
+        <p>Custom pole barns, equestrian facilities, and agricultural buildings across Florida and South Georgia.</p>
+        <p>Licensed &amp; Insured</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="index.html">Home</a><br/>
+           <a href="services.html">Services</a><br/>
+           <a href="gallery.html">Gallery</a><br/>
+           <a href="service-area.html">Service Area</a><br/>
+           <a href="about.html">About</a><br/>
+           <a href="faq.html">FAQ</a><br/>
+           <a href="contact.html">Contact &amp; Quote</a></p>
+      </div>
+      <div>
+        <h4>Get In Touch</h4>
+        <p>(941) 273-2599<br/>
+           openclaudeconsulting@gmail.com<br/>
+           Southwest Florida HQ<br/>
+           <em>Serving all of FL &amp; South GA</em></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="yr"></span> Southern Barn Builders LLC. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+var reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(function(el) { observer.observe(el); });
+} else { reveals.forEach(function(el) { el.classList.add('visible'); }); }
+</script>
+</body>
+</html>

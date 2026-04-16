@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Free Quote &amp; Contact | Southern Barn Builders LLC</title>
+<meta name="description" content="Request a free quote from Southern Barn Builders LLC for your pole barn, horse barn, workshop, RV cover, or agricultural building in Florida or Georgia." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/styles.css" />
+<link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+<meta property="og:site_name" content="Southern Barn Builders LLC" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Free Quote & Contact | Southern Barn Builders LLC" />
+<meta property="og:description" content="Request a free quote for your pole barn, horse barn, workshop, or agricultural building in Florida or Georgia." />
+<meta name="twitter:card" content="summary_large_image" />
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="container">
+    <span>(941) 273-2599 &nbsp;|&nbsp; openclaudeconsulting@gmail.com</span>
+    <span>Licensed &amp; Insured &middot; Serving FL &amp; GA</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">SB</span>
+      <span>
+        <span class="brand-name">Southern Barn Builders</span><br/>
+        <span class="brand-tag">Built Southern Strong &middot; Est. Florida</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="document.querySelector('.main-nav').classList.toggle('open');document.querySelector('.nav-overlay').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='false')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-overlay" onclick="document.querySelector('.main-nav').classList.remove('open');this.classList.remove('open');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false')"></div>
+    <nav class="main-nav" aria-label="Main">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="service-area.html">Service Area</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a class="nav-cta active" href="contact.html">Free Quote</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="container">
+    <span class="hero-badge">No Obligation</span>
+    <h1>Request a Free Quote</h1>
+    <p>Tell us about your project. We'll follow up within one business day with next steps, a site-visit date, or a same-day estimate where we can.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="container grid-2" style="align-items:start;">
+
+    <div class="form-wrap reveal">
+      <h2 class="mt-0">Start Your Project</h2>
+      <span class="divider"></span>
+
+      <form id="quoteForm"
+            name="quote"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/contact.html?submitted=1"
+            novalidate>
+        <input type="hidden" name="form-name" value="quote" />
+        <p style="display:none;"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="fname">First Name *</label>
+            <input type="text" id="fname" name="fname" required />
+          </div>
+          <div class="form-field">
+            <label for="lname">Last Name *</label>
+            <input type="text" id="lname" name="lname" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone *</label>
+            <input type="tel" id="phone" name="phone" required />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="city">City / Town *</label>
+            <input type="text" id="city" name="city" required />
+          </div>
+          <div class="form-field">
+            <label for="state">State *</label>
+            <select id="state" name="state" required>
+              <option value="">Select...</option>
+              <option>Florida</option>
+              <option>Georgia</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-field">
+            <label for="type">Project Type *</label>
+            <select id="type" name="type" required>
+              <option value="">Select...</option>
+              <option>Agricultural Pole Barn</option>
+              <option>Equestrian Barn / Stables</option>
+              <option>Garage / Workshop</option>
+              <option>RV or Boat Cover</option>
+              <option>Commercial / Storage</option>
+              <option>Barndominium / Home</option>
+              <option>Riding Arena</option>
+              <option>Repair / Re-Roof</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="size">Approximate Size</label>
+            <input type="text" id="size" name="size" placeholder="e.g. 40x60, or 2,400 sq ft" />
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="timing">Desired Timeframe</label>
+          <select id="timing" name="timing">
+            <option value="">Select...</option>
+            <option>ASAP / 0--3 months</option>
+            <option>3--6 months</option>
+            <option>6--12 months</option>
+            <option>Just gathering info</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="details">Tell Us About Your Project</label>
+          <textarea id="details" name="details" placeholder="Lot size, uses, lean-tos, finish level, any questions, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Send My Request</button>
+        <div class="form-note">By sending, you agree to be contacted about your project. We never share your info.</div>
+      </form>
+
+      <div id="quoteSuccess" style="display:none; margin-top:20px; padding:20px; background:#e8f0de; border-left:4px solid var(--sb-green); color:var(--sb-green-dark); border-radius:var(--radius-sm);">
+        <strong>Request received.</strong> Thanks -- a Southern Barn Builders team member will reach out within one business day.
+      </div>
+    </div>
+
+    <aside class="reveal reveal-delay-2">
+      <h2 class="mt-0">Talk To Us Directly</h2>
+      <span class="divider"></span>
+      <p><strong>Phone</strong><br/>
+        <a href="tel:+19412732599">(941) 273-2599</a></p>
+      <p><strong>Email</strong><br/>
+        <a href="mailto:openclaudeconsulting@gmail.com">openclaudeconsulting@gmail.com</a></p>
+      <p><strong>Headquarters</strong><br/>
+        Southwest Florida<br/>
+        <em>Serving all of FL &amp; South GA</em></p>
+
+      <div class="card" style="margin-top:28px;">
+        <h3 class="mt-0">Office Hours</h3>
+        <p class="mb-0">
+          Mon--Fri: 7:00 AM -- 6:00 PM<br/>
+          Saturday: 8:00 AM -- 2:00 PM<br/>
+          Sunday: Closed
+        </p>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <h3 class="mt-0">What Happens Next?</h3>
+        <p class="mb-0">1. We review your request.<br/>
+          2. We schedule a call or site visit.<br/>
+          3. You get a clear written quote -- no pressure.</p>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid-3">
+      <div>
+        <h4>Southern Barn Builders LLC</h4>
+        <p>Custom pole barns, equestrian facilities, and agricultural buildings across Florida and South Georgia.</p>
+        <p>Licensed &amp; Insured</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <p><a href="index.html">Home</a><br/>
+           <a href="services.html">Services</a><br/>
+           <a href="gallery.html">Gallery</a><br/>
+           <a href="service-area.html">Service Area</a><br/>
+           <a href="about.html">About</a><br/>
+           <a href="faq.html">FAQ</a><br/>
+           <a href="contact.html">Contact &amp; Quote</a></p>
+      </div>
+      <div>
+        <h4>Get In Touch</h4>
+        <p>(941) 273-2599<br/>
+           openclaudeconsulting@gmail.com<br/>
+           Southwest Florida HQ<br/>
+           <em>Serving all of FL &amp; South GA</em></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; <span id="yr"></span> Southern Barn Builders LLC. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+if (new URLSearchParams(window.location.search).get('submitted') === '1') {
+  var f = document.getElementById('quoteForm');
+  var s = document.getElementById('quoteSuccess');
+  if (f) f.style.display = 'none';
+  if (s) {
+    s.style.display = 'block';
+    window.scrollTo({top: s.offsetTop - 80, behavior: 'smooth'});
+  }
+}
+var reveals = document.querySelectorAll('.reveal');
+if ('IntersectionObserver' in window) {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(function(el) { observer.observe(el); });
+} else { reveals.forEach(function(el) { el.classList.add('visible'); }); }
+</script>
+</body>
+</html>

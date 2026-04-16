@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://southern-barn-builders.netlify.app/sitemap.xml
