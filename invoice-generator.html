@@ -367,10 +367,9 @@ body {
 .inv-totals {
   display: flex;
   justify-content: flex-end;
-  padding: 20px 40px 0;
 }
 .inv-totals-table {
-  width: 280px;
+  width: 100%;
 }
 .inv-totals-row {
   display: flex;
@@ -441,34 +440,18 @@ body {
   font-style: italic;
 }
 
-/* Due box */
-.inv-due-box {
-  margin: 24px 40px;
-  background: var(--sb-parchment);
-  border: 2px solid var(--sb-gold);
-  border-radius: 8px;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.inv-due-box .due-label {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--sb-green-dark);
-}
-.inv-due-box .due-amount {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  color: var(--sb-red);
+/* Notes & Totals side-by-side layout */
+.inv-notes-totals {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  padding: 20px 40px 16px;
+  align-items: start;
 }
 
 /* Notes / Terms */
 .inv-footer {
-  padding: 20px 40px 32px;
+  padding: 0;
 }
 .inv-footer h3 {
   font-size: 10px;
@@ -476,11 +459,11 @@ body {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--sb-muted);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .inv-footer p {
-  font-size: 12px;
-  line-height: 1.7;
+  font-size: 11px;
+  line-height: 1.6;
   color: var(--sb-muted);
   white-space: pre-wrap;
 }
@@ -525,10 +508,19 @@ body {
     min-height: auto;
     width: 100%;
   }
-  .inv-header, .inv-accent, .inv-due-box, .inv-bottom-strip {
+  .inv-header, .inv-accent, .inv-bottom-strip {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
+  .inv-header { padding: 24px 36px; }
+  .inv-info { padding: 20px 36px; }
+  .inv-divider { margin: 0 36px; }
+  .inv-table-wrap { padding: 16px 36px; }
+  .inv-specs { margin: 0 36px; padding: 12px 16px; }
+  .inv-notes-totals { padding: 16px 36px 12px; }
+  .inv-bottom-strip { padding: 10px 36px; }
+  .inv-table tbody td { padding: 10px 12px; }
+  .inv-specs li { font-size: 11px; }
 }
 
 /* ---------- Responsive ---------- */
@@ -839,44 +831,40 @@ function render() {
       <p class="spec-note">* Concrete is not included in this price.</p>
     </div>
 
-    <div class="inv-totals">
-      <div class="inv-totals-table">
-        <div class="inv-totals-row">
-          <span class="label">Subtotal</span>
-          <span class="value">${money(subtotal)}</span>
-        </div>
-        <div class="inv-totals-row">
-          <span class="label">Deposit (${depPct}%)</span>
-          <span class="value">${money(deposit)}</span>
-        </div>
-        <div class="inv-totals-row">
-          <span class="label">Sales Tax (${taxRatePct}%)</span>
-          <span class="value">${money(taxOnDeposit)}</span>
-        </div>
-        <div class="inv-totals-row deposit">
-          <span class="label">Total Due Now</span>
-          <span class="value">${money(amountDueNow)}</span>
-        </div>
-        <div class="inv-totals-row balance">
-          <span class="label">Remaining Balance (due at completion)</span>
-          <span class="value">${money(balanceDue)}</span>
+    <div class="inv-notes-totals">
+      <div class="inv-footer">
+        <h3>Notes &amp; Terms</h3>
+        <p>${notes.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
+      </div>
+      <div class="inv-totals">
+        <div class="inv-totals-table">
+          <div class="inv-totals-row">
+            <span class="label">Subtotal</span>
+            <span class="value">${money(subtotal)}</span>
+          </div>
+          <div class="inv-totals-row">
+            <span class="label">Deposit (${depPct}%)</span>
+            <span class="value">${money(deposit)}</span>
+          </div>
+          <div class="inv-totals-row">
+            <span class="label">Sales Tax (${taxRatePct}%)</span>
+            <span class="value">${money(taxOnDeposit)}</span>
+          </div>
+          <div class="inv-totals-row deposit">
+            <span class="label">Total Due Now</span>
+            <span class="value">${money(amountDueNow)}</span>
+          </div>
+          <div class="inv-totals-row balance">
+            <span class="label">Balance at completion</span>
+            <span class="value">${money(balanceDue)}</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="inv-due-box">
-      <div class="due-label">Amount Due Now</div>
-      <div class="due-amount">${money(amountDueNow)}</div>
-    </div>
-
-    <div class="inv-footer">
-      <h3>Notes &amp; Terms</h3>
-      <p>${notes.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
-    </div>
-
     <div class="inv-bottom-strip">
       <span>Southern Barn Builders LLC &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Serving FL &amp; GA</span>
-      <span>(941) 273-2599 &nbsp;&bull;&nbsp; <a href="mailto:openclaudeconsulting@gmail.com">openclaudeconsulting@gmail.com</a></span>
+      <span>(941) 273-2599 &nbsp;&bull;&nbsp; <a href="mailto:southern.barn.services@gmail.com">southern.barn.services@gmail.com</a></span>
     </div>
   `;
 }
