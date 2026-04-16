@@ -16,13 +16,86 @@
 <meta property="og:description" content="Headquartered in Southwest Florida, serving every county in Florida and reaching up into South Georgia." />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
-  .map-states { display:block; margin:0 auto; max-width: 760px; }
-  .state-fl { fill: #8a1c1c; stroke: #5c0f0f; stroke-width: 2; }
-  .state-ga { fill: #2f4a2a; stroke: #1e3119; stroke-width: 2; }
-  .state-other { fill: #e6dcc2; stroke: #b8a983; stroke-width: 1; }
-  .hq-pin { fill: #c9a227; stroke: #1e3119; stroke-width: 2; }
-  .hq-label { font-family: "Playfair Display", serif; font-size: 18px; fill: #1a1a1a; font-weight: 700; }
-  .state-label { font-family: "Playfair Display", serif; font-size: 22px; fill: #fdf8ec; font-weight: 700; pointer-events:none; }
+  .map-section { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .map-visual { position: relative; }
+  .map-visual svg { display: block; width: 100%; max-width: 520px; margin: 0 auto; height: auto; }
+  .map-info { display: flex; flex-direction: column; gap: 24px; }
+  .map-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 28px 24px;
+    border: 1px solid rgba(216,205,179,0.5);
+    box-shadow: 0 4px 24px rgba(107,68,35,0.08);
+  }
+  .map-card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.15rem; }
+  .map-card .region-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+  }
+  .map-card .region-tag.fl { background: rgba(138,28,28,0.1); color: #8a1c1c; }
+  .map-card .region-tag.ga { background: rgba(47,74,42,0.1); color: #2f4a2a; }
+  .map-card .region-tag.hq { background: rgba(201,162,39,0.15); color: #8a7518; }
+  .map-card p { color: #5c5143; margin: 0; font-size: 0.95rem; line-height: 1.65; }
+
+  /* SVG map styles */
+  .svg-state-fl {
+    fill: #8a1c1c;
+    fill-opacity: 0.12;
+    stroke: #8a1c1c;
+    stroke-width: 2;
+    transition: fill-opacity 0.3s ease;
+  }
+  .svg-state-fl:hover { fill-opacity: 0.22; }
+  .svg-state-ga {
+    fill: #2f4a2a;
+    fill-opacity: 0.12;
+    stroke: #2f4a2a;
+    stroke-width: 2;
+    transition: fill-opacity 0.3s ease;
+  }
+  .svg-state-ga:hover { fill-opacity: 0.22; }
+  .svg-state-other {
+    fill: none;
+    stroke: #d8cdb3;
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+  }
+  .svg-label {
+    font-family: "Outfit", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    fill: #5c5143;
+  }
+  .svg-hq-ring {
+    fill: none;
+    stroke: #c9a227;
+    stroke-width: 2;
+  }
+  .svg-hq-dot { fill: #c9a227; }
+  .svg-hq-pulse {
+    fill: none;
+    stroke: #c9a227;
+    stroke-width: 1;
+    animation: hq-pulse 2s ease-out infinite;
+  }
+  @keyframes hq-pulse {
+    0% { r: 6; opacity: 0.8; }
+    100% { r: 20; opacity: 0; }
+  }
+  .svg-connector { stroke: #b8a983; stroke-width: 1; stroke-dasharray: 3 2; }
+
+  @media (max-width: 880px) {
+    .map-section { grid-template-columns: 1fr; }
+    .map-visual svg { max-width: 400px; }
+  }
 </style>
 </head>
 <body>
@@ -81,29 +154,79 @@
       <span class="divider"></span>
     </div>
 
-    <div class="map-wrap reveal">
-      <svg class="map-states" viewBox="0 0 700 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Service area map of Florida and Georgia">
-        <path class="state-other" d="M0,180 L200,180 L200,260 L0,260 Z" />
-        <text x="100" y="228" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" fill="#7a6e52">Alabama</text>
-        <path class="state-other" d="M560,80 L700,80 L700,220 L560,220 Z" />
-        <text x="630" y="158" text-anchor="middle" font-family="Outfit, sans-serif" font-size="14" fill="#7a6e52">South Carolina</text>
-        <path class="state-ga" d="M200,80 L560,80 L560,220 L520,240 L480,260 L430,260 L430,275 L200,275 Z" />
-        <text x="360" y="175" text-anchor="middle" class="state-label">GEORGIA</text>
-        <path class="state-fl" d="
-          M200,275 L430,275 L430,310 L400,325 L360,335 L330,340 L330,380
-          L345,420 L360,460 L370,490 L360,505 L340,510 L320,495
-          L305,465 L295,430 L285,395 L270,365 L250,340 L220,325 L200,315 Z" />
-        <text x="330" y="410" text-anchor="middle" class="state-label">FLORIDA</text>
-        <circle class="hq-pin" cx="310" cy="450" r="10"/>
-        <line x1="310" y1="450" x2="310" y2="478" stroke="#1e3119" stroke-width="2"/>
-        <text x="310" y="495" text-anchor="middle" class="hq-label">HQ &middot; SW Florida</text>
-      </svg>
-    </div>
+    <div class="map-section reveal">
+      <div class="map-visual">
+        <svg viewBox="0 0 440 580" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Service area map showing Florida and South Georgia">
+          <!-- Georgia (simplified realistic outline) -->
+          <path class="svg-state-ga" d="
+            M130,10 L310,10 L330,15 L350,25 L365,40 L370,55
+            L372,75 L368,95 L360,115 L355,135 L350,155 L348,170
+            L345,185 L340,195 L335,200 L325,205 L310,208
+            L295,210 L280,212 L265,215 L250,218 L235,220
+            L220,222 L205,223 L190,224 L175,225
+            L160,224 L145,222 L132,218 L125,210 L120,195
+            L118,180 L117,165 L118,150 L120,135
+            L122,120 L124,105 L126,85 L127,65
+            L128,45 L129,25 Z" />
 
-    <div class="legend-box">
-      <span><span class="legend-swatch" style="background:#8a1c1c;"></span>Florida &middot; All counties</span>
-      <span><span class="legend-swatch" style="background:#2f4a2a;"></span>South Georgia &middot; Select counties</span>
-      <span><span class="legend-swatch" style="background:#c9a227;"></span>Headquarters</span>
+          <!-- Florida (simplified realistic outline) -->
+          <path class="svg-state-fl" d="
+            M50,225 L100,224 L120,224 L175,225 L205,223
+            L235,220 L265,215 L295,210 L325,205
+            L340,210 L348,220 L350,232 L345,245
+            L335,255 L320,262 L308,270 L298,280
+            L292,292 L288,305 L286,320 L287,335
+            L290,350 L296,365 L304,378 L312,390
+            L320,402 L326,415 L330,428 L332,440
+            L330,452 L325,462 L318,470 L308,476
+            L296,478 L284,475 L274,468 L265,458
+            L256,445 L248,430 L240,415 L232,400
+            L224,386 L216,374 L208,364 L198,355
+            L186,348 L174,342 L160,338 L148,335
+            L135,330 L122,324 L110,316 L98,306
+            L86,295 L76,282 L66,268 L58,255
+            L52,242 L50,230 Z" />
+
+          <!-- Neighboring states (subtle dashed outlines) -->
+          <path class="svg-state-other" d="M50,10 L130,10 L128,45 L127,65 L126,85 L124,105 L122,120 L118,150 L117,165 L118,180 L120,195 L125,210 L120,224 L100,224 L50,225 Z" />
+          <path class="svg-state-other" d="M310,10 L400,10 L400,100 L395,120 L385,145 L372,165 L365,175 L355,190 L348,200 L348,170 L350,155 L355,135 L360,115 L368,95 L372,75 L370,55 L365,40 L350,25 L330,15 Z" />
+
+          <!-- State labels (positioned outside, connected by lines) -->
+          <line class="svg-connector" x1="230" y1="165" x2="230" y2="140" />
+          <text x="230" y="133" text-anchor="middle" class="svg-label">Georgia</text>
+
+          <line class="svg-connector" x1="260" y1="350" x2="260" y2="325" />
+          <text x="260" y="318" text-anchor="middle" class="svg-label">Florida</text>
+
+          <text x="85" y="140" text-anchor="middle" class="svg-label" style="fill:#b8a983; font-size:9px; letter-spacing:1.5px;">AL</text>
+          <text x="385" y="90" text-anchor="middle" class="svg-label" style="fill:#b8a983; font-size:9px; letter-spacing:1.5px;">SC</text>
+
+          <!-- HQ Pin (SW Florida) with pulse -->
+          <circle class="svg-hq-pulse" cx="230" cy="415" r="6" />
+          <circle class="svg-hq-ring" cx="230" cy="415" r="10" />
+          <circle class="svg-hq-dot" cx="230" cy="415" r="5" />
+          <line class="svg-connector" x1="230" y1="428" x2="230" y2="448" />
+          <text x="230" y="462" text-anchor="middle" class="svg-label" style="fill:#8a7518; font-size:10px;">HQ</text>
+        </svg>
+      </div>
+
+      <div class="map-info">
+        <div class="map-card">
+          <span class="region-tag fl">Florida</span>
+          <h3>All Counties Covered</h3>
+          <p>From the Panhandle to the Keys, we build across every Florida county. Headquartered in Southwest Florida with crews traveling statewide.</p>
+        </div>
+        <div class="map-card">
+          <span class="region-tag ga">South Georgia</span>
+          <h3>Select Counties</h3>
+          <p>Valdosta, Tifton, Waycross, Thomasville, and beyond. Our crews travel into South Georgia for the right project.</p>
+        </div>
+        <div class="map-card">
+          <span class="region-tag hq">Headquarters</span>
+          <h3>Southwest Florida</h3>
+          <p>Our home base. One team, one point of contact, whether your land is 20 miles away or 200.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
