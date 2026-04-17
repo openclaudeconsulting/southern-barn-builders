@@ -74,12 +74,14 @@
       <form id="quoteForm"
             name="quote"
             method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action="/contact.html?submitted=1"
+            action="https://formsubmit.co/southernbarnservices@gmail.com"
             novalidate>
-        <input type="hidden" name="form-name" value="quote" />
-        <p style="display:none;"><label>Don't fill this out: <input name="bot-field" /></label></p>
+        <!-- FormSubmit config -->
+        <input type="hidden" name="_subject" value="New Quote Request — Southern Barn Builders" />
+        <input type="hidden" name="_next" value="https://southern-barn-builders.netlify.app/contact.html?submitted=1" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style="display:none" />
 
         <div class="form-row">
           <div class="form-field">
