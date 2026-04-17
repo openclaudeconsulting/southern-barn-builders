@@ -74,16 +74,17 @@
       <form id="quoteForm"
             name="quote"
             method="POST"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field"
-            action="/thanks.html"
+            action="https://formsubmit.co/southernbarnservices@gmail.com"
             novalidate>
-        <!-- Netlify Forms requires a hidden form-name for JS-submitted forms -->
-        <input type="hidden" name="form-name" value="quote" />
-        <!-- Honeypot field — real users won't fill this, bots will -->
-        <p hidden>
-          <label>Don't fill this out: <input name="bot-field" /></label>
-        </p>
+        <!-- FormSubmit config. Endpoint uses the NO-DOTS variant of the
+             email because that's the one already activated. Gmail ignores
+             dots, so mail still lands in the same inbox as
+             southern.barn.services@gmail.com. -->
+        <input type="hidden" name="_subject" value="New Quote Request — Southern Barn Builders" />
+        <input type="hidden" name="_next" value="https://southernbarnbuilders.netlify.app/thanks.html" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
         <div class="form-row">
           <div class="form-field">
