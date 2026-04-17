@@ -74,14 +74,16 @@
       <form id="quoteForm"
             name="quote"
             method="POST"
-            action="https://formsubmit.co/southern.barn.services@gmail.com"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field"
+            action="/thanks.html"
             novalidate>
-        <!-- FormSubmit config -->
-        <input type="hidden" name="_subject" value="New Quote Request — Southern Barn Builders" />
-        <input type="hidden" name="_next" id="nextField" value="/thanks.html" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="text" name="_honey" style="display:none" />
+        <!-- Netlify Forms requires a hidden form-name for JS-submitted forms -->
+        <input type="hidden" name="form-name" value="quote" />
+        <!-- Honeypot field — real users won't fill this, bots will -->
+        <p hidden>
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
 
         <div class="form-row">
           <div class="form-field">
@@ -231,14 +233,6 @@
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-
-// Set FormSubmit redirect to the same origin the user is on (works for
-// netlify.app subdomain AND any custom domain added later).
-var nextField = document.getElementById('nextField');
-if (nextField) {
-  nextField.value = window.location.origin + '/thanks.html';
-}
-
 var reveals = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window) {
   var observer = new IntersectionObserver(function(entries) {
