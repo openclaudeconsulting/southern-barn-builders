@@ -74,11 +74,11 @@
       <form id="quoteForm"
             name="quote"
             method="POST"
-            action="https://formsubmit.co/southernbarnservices@gmail.com"
+            action="https://formsubmit.co/southern.barn.services@gmail.com"
             novalidate>
         <!-- FormSubmit config -->
         <input type="hidden" name="_subject" value="New Quote Request — Southern Barn Builders" />
-        <input type="hidden" name="_next" value="/thanks.html" />
+        <input type="hidden" name="_next" id="nextField" value="/thanks.html" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
         <input type="text" name="_honey" style="display:none" />
@@ -162,10 +162,6 @@
         <button type="submit" class="btn btn-primary">Send My Request</button>
         <div class="form-note">By sending, you agree to be contacted about your project. We never share your info.</div>
       </form>
-
-      <div id="quoteSuccess" style="display:none; margin-top:20px; padding:20px; background:#e8f0de; border-left:4px solid var(--sb-green); color:var(--sb-green-dark); border-radius:var(--radius-sm);">
-        <strong>Request received.</strong> Thanks -- a Southern Barn Builders team member will reach out within one business day.
-      </div>
     </div>
 
     <aside class="reveal reveal-delay-2">
@@ -235,15 +231,14 @@
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
-if (new URLSearchParams(window.location.search).get('submitted') === '1') {
-  var f = document.getElementById('quoteForm');
-  var s = document.getElementById('quoteSuccess');
-  if (f) f.style.display = 'none';
-  if (s) {
-    s.style.display = 'block';
-    window.scrollTo({top: s.offsetTop - 80, behavior: 'smooth'});
-  }
+
+// Set FormSubmit redirect to the same origin the user is on (works for
+// netlify.app subdomain AND any custom domain added later).
+var nextField = document.getElementById('nextField');
+if (nextField) {
+  nextField.value = window.location.origin + '/thanks.html';
 }
+
 var reveals = document.querySelectorAll('.reveal');
 if ('IntersectionObserver' in window) {
   var observer = new IntersectionObserver(function(entries) {
