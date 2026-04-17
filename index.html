@@ -45,6 +45,26 @@
 </head>
 <body>
 
+<!--
+  Hidden duplicate form for Netlify post-processor detection.
+  Netlify scans the published HTML at deploy time for forms with
+  data-netlify="true". This static copy guarantees the "quote" form
+  is always registered. The real user-facing form lives in contact.html.
+-->
+<form name="quote" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+  <input type="text" name="fname" />
+  <input type="text" name="lname" />
+  <input type="email" name="email" />
+  <input type="tel" name="phone" />
+  <input type="text" name="city" />
+  <input type="text" name="state" />
+  <input type="text" name="type" />
+  <input type="text" name="size" />
+  <input type="text" name="timing" />
+  <textarea name="details"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+
 <a class="skip-link" href="#main">Skip to content</a>
 
 <div class="topbar">
