@@ -25,6 +25,13 @@ build/
 # Netlify
 .netlify/
 
+# Cloudflare
+.cloudflare/
+.wrangler/
+
+# Image backups (uncompressed originals kept locally only)
+images/_original_backup/
+
 # Logs
 *.log
 npm-debug.log*
