@@ -10,8 +10,8 @@ A static marketing website for **Southern Barn Builders LLC**, a pole-barn const
 
 - Plain HTML + CSS. No build step. No framework.
 - Google Fonts (Playfair Display + Inter) loaded from CDN.
-- Deployed on **Netlify**, git-connected to GitHub. Free `*.netlify.app` subdomain for now.
-- Quote form submits via **Netlify Forms** (no backend code).
+- Deployed on **Cloudflare Pages**, git-connected to GitHub. Live at `https://southbarnservices.com`.
+- Quote form submits via **Formsubmit.co** → `southern.barn.services@gmail.com` (no backend code).
 
 ## File map
 
@@ -23,16 +23,17 @@ southern-barn-builders/
 ├── service-area.html    Custom inline SVG map of FL + GA + region lists
 ├── about.html           Story, values, credentials
 ├── faq.html             10 Q&A with FAQPage JSON-LD
-├── contact.html         Quote form (Netlify Forms) + direct contact info
+├── contact.html         Quote form (Formsubmit.co) + direct contact info
 ├── 404.html             Branded not-found page
 ├── css/styles.css       All styles (variables, sections, responsive)
 ├── images/favicon.svg   SB monogram favicon (red/gold on cream)
 ├── images/              (real project photos go here — currently empty)
 ├── sitemap.xml          7 URLs, submitted to Google Search Console later
 ├── robots.txt           Allow all + sitemap pointer
-├── netlify.toml         publish=".", clean URLs, security headers
+├── _headers             Cloudflare Pages security headers
+├── _redirects           Cloudflare Pages clean-URL rules
 ├── README.md            Dev overview
-├── DEPLOY.md            Step-by-step Netlify deploy walkthrough
+├── DEPLOY.md            Step-by-step Cloudflare Pages deploy walkthrough
 └── .gitignore
 ```
 
@@ -54,16 +55,15 @@ Fonts: `Playfair Display` (serif, headers) + `Inter` (sans, body). All color/fon
 
 Bold Southern heritage. Confident, grounded, plainspoken, slightly rural, never cheesy. Think "family-owned builder who shows up with a firm handshake" — not "rustic Instagram aesthetic." Short punchy sentences. Occasional cowboy flavor is fine ("raised," "posts in the ground," "pasture's empty") but use sparingly.
 
-## Known placeholders — replace before launch
+## Known placeholders — still to replace
 
-- Phone `(239) 555-0142` — appears in topbar, footer, contact page, and JSON-LD
-- Email `info@southernbarnbuilders.com`
 - Gallery images (all Unsplash) — replace with real project photos in `images/`
 - Hero / About stock photos — also Unsplash
 - Owner name, year founded, specific license numbers — not yet on site
-- `https://southern-barn-builders.netlify.app` — update sitemap.xml, robots.txt, and JSON-LD if a custom domain is added
 
-To find every placeholder: `grep -rn "555-0142\|southern-barn-builders.netlify.app\|unsplash" .`
+Real contact info (phone `(352) 646-9090`, email `southern.barn.services@gmail.com`) and the canonical URL `https://southbarnservices.com` are now wired throughout the site.
+
+To find remaining placeholders: `grep -rn "unsplash\|picsum" .`
 
 ## Conventions
 

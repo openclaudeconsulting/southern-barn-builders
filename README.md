@@ -7,7 +7,7 @@ Static multi-page marketing site for Southern Barn Builders LLC, a pole barn bui
 - Plain HTML + CSS (no build step, no framework)
 - Google Fonts: Playfair Display + Inter
 - Custom SVG service-area map (inline in `service-area.html`)
-- Form handling via [Netlify Forms](https://docs.netlify.com/forms/setup/)
+- Form handling via [Formsubmit.co](https://formsubmit.co/) → `southern.barn.services@gmail.com`
 
 ## Structure
 
@@ -18,11 +18,12 @@ southern-barn-builders/
 ├── gallery.html          Photo gallery
 ├── service-area.html     FL + GA coverage map
 ├── about.html            Company story + values
-├── contact.html          Quote request form (Netlify Forms)
+├── contact.html          Quote request form (Formsubmit.co)
 ├── css/
 │   └── styles.css        Shared stylesheet
 ├── images/               (real project photos go here)
-├── netlify.toml          Netlify config (headers, redirects)
+├── _headers              Cloudflare Pages security headers
+├── _redirects            Cloudflare Pages clean-URL rules
 ├── .gitignore
 ├── DEPLOY.md             Deployment walkthrough
 └── README.md
@@ -44,15 +45,15 @@ Open http://localhost:8000.
 
 ## Deploy
 
-See [`DEPLOY.md`](./DEPLOY.md). Short version: push to GitHub, connect the repo in Netlify, done.
+See [`DEPLOY.md`](./DEPLOY.md). Short version: push to GitHub, connect the repo in Cloudflare Pages, done. Live at `https://southbarnservices.com`.
 
-## Placeholders to replace before launch
+## Placeholders still to replace
 
-- Phone: `(239) 555-0142` (appears in header, footer, contact page)
-- Email: `info@southernbarnbuilders.com`
 - Gallery photos — currently Unsplash stock; swap for real project photos in `images/`
 - Hero / About photos — also Unsplash; replace when ready
 - License numbers — add to footer / about page once confirmed
+
+Real contact info (`(352) 646-9090` / `southern.barn.services@gmail.com`) is already wired throughout.
 
 ## Brand system
 
@@ -68,9 +69,9 @@ Fonts: `Playfair Display` (serif, headers) + `Inter` (sans, body).
 
 ## Roadmap
 
-1. Deploy static site to Netlify (in progress)
-2. Swap placeholder content for real info
-3. Custom domain + DNS
-4. SEO pass (run `marketing:seo-audit` once live)
+1. ~~Deploy static site~~ — live on Cloudflare Pages at `https://southbarnservices.com`
+2. ~~Custom domain + DNS~~ — done
+3. Swap remaining placeholder photos for real project shots
+4. SEO pass (run `marketing:seo-audit`)
 5. Add Google Business Profile link + reviews widget
 6. Consider migrating to Astro or Eleventy if a blog / CMS is needed
