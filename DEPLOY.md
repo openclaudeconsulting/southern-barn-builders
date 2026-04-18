@@ -1,6 +1,10 @@
 # Deployment Walkthrough
 
-Target: **Netlify**, git-connected to GitHub, free subdomain (`*.netlify.app`) for now.
+Target: **Cloudflare Pages**, git-connected to GitHub, free `*.pages.dev` subdomain for now.
+
+**Why Cloudflare Pages:** unlimited bandwidth, unlimited requests, free SSL, global CDN. No surprise overage bills if a Facebook ad brings a traffic spike.
+
+Contact form uses **Formsubmit.co** — unlimited free submissions, goes straight to `southernbarnservices@gmail.com` (the no-dots variant of the real inbox; Gmail treats them as the same address).
 
 ---
 
@@ -24,46 +28,63 @@ git remote add origin https://github.com/<your-username>/southern-barn-builders.
 git push -u origin main
 ```
 
-## 2. Connect Netlify to GitHub
+## 2. Connect Cloudflare Pages to GitHub
 
-1. Go to https://app.netlify.com and sign in (use "Sign up with GitHub" if new).
-2. Click **Add new site → Import an existing project → Deploy with GitHub**.
-3. Authorize Netlify to access your repos (you can limit it to just this one).
-4. Select `southern-barn-builders`.
-5. Build settings — **leave everything blank**. Our `netlify.toml` already sets `publish = "."`.
-6. Click **Deploy site**.
+1. Go to https://dash.cloudflare.com and sign in (or sign up — free).
+2. In the left sidebar, click **Workers & Pages**.
+3. Click **Create** → **Pages** tab → **Connect to Git**.
+4. Authorize Cloudflare to access your GitHub (you can limit it to just this one repo).
+5. Select `southern-barn-builders` → **Begin setup**.
+6. Build settings — **leave everything blank**:
+   - Framework preset: **None**
+   - Build command: *(empty)*
+   - Build output directory: *(empty — or `/`)*
+7. Click **Save and Deploy**.
 
-First deploy takes ~30 seconds. You'll get a URL like `https://zealous-curie-a1b2c3.netlify.app`.
+First deploy takes ~30 seconds. You'll get a URL like `https://southern-barn-builders.pages.dev`.
 
-## 3. Rename the site (optional)
+## 3. Activate Formsubmit.co (one-time)
 
-1. In Netlify: **Site configuration → Change site name**.
-2. Pick something like `southern-barn-builders` → `https://southern-barn-builders.netlify.app`.
+The first time you submit the form, Formsubmit emails `southernbarnservices@gmail.com` with an activation link. Click it once and future submissions arrive silently.
 
-## 4. Verify the quote form
+1. Open the live site → submit a test quote.
+2. Check the Gmail inbox for an email from Formsubmit — click the confirm link.
+3. From then on, every real submission arrives as a clean formatted email.
 
-The contact form is wired to **Netlify Forms**:
+## 4. Verify everything works
 
-1. Submit a test quote on the live site.
-2. In Netlify: **Forms** tab → you should see the submission.
-3. Set up email notifications: **Forms → Settings and usage → Form notifications → Add notification → Email notification** → enter your real email.
-
-If submissions don't appear, check: the hidden input `<input type="hidden" name="form-name" value="quote" />` must be inside `<form>`.
+- Visit every nav link. Confirm they all load.
+- Submit the quote form. Confirm you land on `/thanks.html` and get the email.
+- Check on phone (narrow viewport) — nav hamburger should work.
 
 ## 5. Auto-deploy on every push
 
-From here on, every `git push origin main` triggers a new deploy automatically. You can preview branches with deploy previews by opening a PR.
+From here on, every `git push origin main` triggers a new deploy automatically. Each pull request also gets its own preview URL — handy for reviewing copy changes before they go live.
 
 ## 6. Custom domain (later)
 
-When you buy a domain:
+When you buy a domain (recommend [Cloudflare Registrar](https://www.cloudflare.com/products/registrar/) at ~$10/yr wholesale, no renewal markup):
 
-1. Netlify: **Domain management → Add a domain** → enter the domain.
-2. Follow the DNS instructions (either point nameservers to Netlify, or add a CNAME/A record at your registrar).
-3. Netlify auto-provisions a free Let's Encrypt SSL cert.
+1. Cloudflare Pages → your project → **Custom domains** → **Set up a custom domain**.
+2. Enter the domain. If registered at Cloudflare, DNS is auto-configured. If registered elsewhere, follow the CNAME instructions.
+3. SSL cert auto-provisions within minutes.
+4. Update `sitemap.xml`, `robots.txt`, and any absolute URLs in JSON-LD to use the new domain.
+
+## Cost summary
+
+| Piece | Service | Cost |
+|---|---|---|
+| Hosting + SSL + CDN | Cloudflare Pages | $0 |
+| Contact form | Formsubmit.co | $0 |
+| Auto-deploy from git | GitHub | $0 |
+| Domain (when ready) | Cloudflare Registrar | ~$10/yr |
+
+**Total: $0 today, ~$10/year once you add a domain.**
 
 ## Troubleshooting
 
 - **CSS not loading**: confirm the `css/` folder made it into the repo (`git ls-files | grep css`).
-- **Form doesn't submit**: Netlify detects forms at deploy time — you must redeploy after adding/editing `<form>` tags.
-- **Clean URL redirects 404**: check `netlify.toml` is at repo root and committed.
+- **Form submits but no email arrives**: did you click the Formsubmit activation link on the first submission? Check spam folder.
+- **Clean URL redirects 404**: confirm `_redirects` is at the repo root and committed.
+- **Build fails**: confirm build command is empty — this is a static site, no build needed.
+- **Want a different form email**: edit the `action=` URL in `contact.html` to `https://formsubmit.co/<your-email>`.

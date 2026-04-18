@@ -1,0 +1,5 @@
+# Cloudflare Pages redirects
+# Mirrors the rules from netlify.toml so clean URLs keep working.
+# Format: FROM  TO  STATUS
+
+/services.html  /services  301
