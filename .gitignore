@@ -22,6 +22,16 @@ build/
 .env.*
 !.env.example
 
+# OAuth / API credentials (live in parent dir but exclude defensively)
+credentials.json
+token.json
+client_secret*.json
+.discord_webhook
+
+# Generated quote PDFs (live in parent dir but exclude defensively)
+INVOICE*.pdf
+QUOTE*.pdf
+
 # Netlify
 .netlify/
 

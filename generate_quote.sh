@@ -131,6 +131,16 @@ echo "Generating PDF..."
 echo "  Customer: $NAME"
 echo "  Output:   $OUTPUT"
 
+# Preflight: verify the local server is up before invoking Chrome.
+# Without this, Chrome silently renders an error page and saves it as the "quote".
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL" || echo "000")
+if [[ ! "$HTTP_CODE" =~ ^2 ]]; then
+  echo "ERROR: Local server at $BASE_URL is not responding (HTTP $HTTP_CODE)."
+  echo "Start it with:"
+  echo "  cd \"$(pwd)\" && python -m http.server 8080 &"
+  exit 1
+fi
+
 "$CHROME" \
   --headless=new \
   --disable-gpu \
@@ -139,12 +149,22 @@ echo "  Output:   $OUTPUT"
   --print-to-pdf="$OUTPUT" \
   "$URL" 2>/dev/null
 
-if [[ -f "$OUTPUT" ]]; then
-  echo "Done. PDF saved to: $OUTPUT"
-else
+if [[ ! -f "$OUTPUT" ]]; then
   echo "ERROR: PDF was not created."
   exit 1
 fi
+
+# Sanity-check PDF size. Chrome error pages are tiny (~20KB).
+# A valid Southern Barn quote is ~180KB. If the PDF is suspiciously small,
+# bail out so we don't post a broken PDF to Discord.
+FILE_SIZE=$(stat -c%s "$OUTPUT" 2>/dev/null || wc -c < "$OUTPUT")
+if [[ "$FILE_SIZE" -lt 50000 ]]; then
+  echo "ERROR: Generated PDF is only $FILE_SIZE bytes — likely an error page, not a real quote."
+  echo "Server may have gone down mid-generation. Re-run after confirming the server is up."
+  exit 1
+fi
+
+echo "Done. PDF saved to: $OUTPUT ($FILE_SIZE bytes)"
 
 # ---------- Discord webhook post ----------
 WEBHOOK_FILE="$OUTPUT_DIR/.discord_webhook"
