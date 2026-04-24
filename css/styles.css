@@ -193,7 +193,7 @@ strong { color: var(--pc-navy-dark); }
 
 /* ---------- Header / Nav ---------- */
 .site-header {
-  background: var(--pc-white);
+  background: var(--pc-cream);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -218,64 +218,19 @@ strong { color: var(--pc-navy-dark); }
 .brand {
   display: flex;
   align-items: center;
-  gap: 14px;
   text-decoration: none;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .brand:hover { transform: translateY(-1px); }
-.brand-mark {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
-  color: #fff;
-  background: var(--pc-grad-cta);
-  border: 2px solid var(--pc-navy-dark);
-  border-radius: 10px;
-  padding: 10px 12px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 54px;
-  box-shadow: 0 4px 14px rgba(20, 48, 79, 0.25);
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-.brand:hover .brand-mark {
-  box-shadow: 0 6px 18px rgba(199, 125, 31, 0.35);
-}
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
 .brand-logo {
-  height: 68px;
+  height: 84px;
   width: auto;
   display: block;
   flex-shrink: 0;
   transition: filter 0.3s ease;
 }
 .brand:hover .brand-logo {
-  filter: drop-shadow(0 4px 12px rgba(199, 125, 31, 0.25));
-}
-.brand-name {
-  font-family: var(--font-display);
-  color: var(--pc-navy-dark);
-  font-weight: 800;
-  font-size: 1.2rem;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-}
-.brand-tag {
-  font-size: 0.7rem;
-  color: var(--pc-copper);
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  font-weight: 700;
-  display: block;
-  margin-top: 4px;
+  filter: drop-shadow(0 6px 14px rgba(199, 125, 31, 0.3));
 }
 
 /* Nav */
@@ -1622,8 +1577,7 @@ footer.site-footer p {
   }
 
   .site-header .container { flex-wrap: nowrap; }
-  .brand-tag { display: none; }
-  .brand-logo { height: 52px; }
+  .brand-logo { height: 64px; }
   footer.site-footer .grid-3 { gap: 32px; }
 }
 
@@ -1636,5 +1590,5 @@ footer.site-footer p {
   .region-list { grid-template-columns: 1fr; }
   section.block { padding: 60px 0; }
   .cta-banner { padding: 60px 16px; }
-  .brand-logo { height: 46px; }
+  .brand-logo { height: 56px; }
 }
