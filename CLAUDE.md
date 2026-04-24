@@ -1,34 +1,43 @@
-# Project Briefing — Southern Barn Builders LLC
+# Project Briefing — Perez Construction LLC Website
 
 This file is auto-loaded by Claude Code. It orients you to the project without needing to re-read every file.
 
 ## What this is
 
-A static marketing website for **Southern Barn Builders LLC**, a pole-barn construction company headquartered in Southwest Florida. The company serves all of Florida and into South Georgia. Audience is landowners, ranchers, equestrian clients, and small-business owners looking for custom pole barns, horse barns, workshops, RV/boat covers, commercial storage, and barndominiums.
+A static marketing website for **Perez Construction LLC**, a commercial and residential general contractor serving Florida and South Georgia. Core services are **roofing, pole barn installation, fencing, porches, decks, steps, garages, and workshops**. Audience is homeowners, ranchers, landowners, and commercial clients.
+
+## Important — sales-rep arrangement
+
+The site owner is NOT Perez Construction. The owner runs a sales/referral operation: leads are captured through this site and referred to Perez Construction for fulfillment. The owner keeps the margin above Perez's cost. Therefore:
+
+- Contact info on the site must always be the owner's: **(352) 646-9090** and **Southern.Barn.Services@gmail.com** — so leads flow through the owner.
+- Do NOT put Perez's internal phone numbers (Gilmer or Robert) anywhere.
+- The brand, logo, and service lineup belong to Perez Construction LLC.
 
 ## Stack
 
 - Plain HTML + CSS. No build step. No framework.
-- Google Fonts (Playfair Display + Inter) loaded from CDN.
-- Deployed on **Cloudflare Pages**, git-connected to GitHub. Live at `https://southbarnservices.com`.
-- Quote form submits via **Formsubmit.co** → `southern.barn.services@gmail.com` (no backend code).
+- Google Fonts (Montserrat + Inter) loaded from CDN.
+- Deployed on **Cloudflare Pages**, git-connected to GitHub. Live at `https://southbarnservices.com` (domain kept from prior brand).
+- Quote form submits via **Formsubmit.co** → `southernbarnservices@gmail.com` (Gmail ignores dots, so mail still lands in the canonical `Southern.Barn.Services@gmail.com` inbox).
 
 ## File map
 
 ```
 southern-barn-builders/
-├── index.html           Home — hero, why-us, stats, CTAs
+├── index.html           Home — hero, why-us, stats, services, CTAs
 ├── services.html        9 service cards + 4-step process
-├── gallery.html         Photo grid (Unsplash placeholders)
-├── service-area.html    Custom inline SVG map of FL + GA + region lists
-├── about.html           Story, values, credentials
-├── faq.html             10 Q&A with FAQPage JSON-LD
+├── gallery.html         Photo grid (real project photos)
+├── service-area.html    FL + GA coverage with pinned overlay map
+├── about.html           Story, 6 values, credentials
+├── faq.html             10+ Q&A with FAQPage JSON-LD
 ├── contact.html         Quote form (Formsubmit.co) + direct contact info
 ├── 404.html             Branded not-found page
 ├── css/styles.css       All styles (variables, sections, responsive)
-├── images/favicon.svg   SB monogram favicon (red/gold on cream)
-├── images/              (real project photos go here — currently empty)
-├── sitemap.xml          7 URLs, submitted to Google Search Console later
+├── images/favicon.svg   PC monogram favicon (navy on white)
+├── images/logo-perez.svg  Main brand logo (referenced in <header>)
+├── images/              Real project photos (IMG_*.jpg)
+├── sitemap.xml          URL list for Google Search Console
 ├── robots.txt           Allow all + sitemap pointer
 ├── _headers             Cloudflare Pages security headers
 ├── _redirects           Cloudflare Pages clean-URL rules
@@ -39,55 +48,43 @@ southern-barn-builders/
 
 ## Brand system
 
-| Token           | Color     | Hex       |
-|-----------------|-----------|-----------|
-| Primary red     | Deep red  | `#8a1c1c` |
-| Dark red        |           | `#5c0f0f` |
-| Primary green   | Forest    | `#2f4a2a` |
-| Dark green      |           | `#1e3119` |
-| Accent gold     | Gold      | `#c9a227` |
-| Cream           |           | `#f7f1e3` |
-| Parchment (bg)  |           | `#fdf8ec` |
+| Token              | Color           | Hex       |
+|--------------------|-----------------|-----------|
+| Navy               | Deep navy       | `#1e3a5f` |
+| Navy dark          |                 | `#102338` |
+| Navy light         |                 | `#2c507f` |
+| Blue (primary)     |                 | `#3d6bb4` |
+| Blue dark          |                 | `#2a5390` |
+| Blue light         |                 | `#6d93c9` |
+| Sky                | Soft sky        | `#b8d0ec` |
+| Sky soft (bg alt)  |                 | `#eaf1fa` |
+| White              |                 | `#ffffff` |
+| Off-white (page)   |                 | `#f8fafc` |
+| Ink (text)         |                 | `#0f172a` |
+| Muted (secondary)  |                 | `#475569` |
+| Border             |                 | `#e2e8f0` |
 
-Fonts: `Playfair Display` (serif, headers) + `Inter` (sans, body). All color/font/spacing tokens are defined as CSS custom properties in `css/styles.css` under `:root`. **Modify tokens there, not inline.**
+Fonts: `Montserrat` (display/headers, uppercase h1) + `Inter` (body). All color/font/spacing tokens are defined as CSS custom properties in `css/styles.css` under `:root` with the `--pc-*` prefix. **Modify tokens there, not inline.**
 
 ## Tone of voice
 
-Bold Southern heritage. Confident, grounded, plainspoken, slightly rural, never cheesy. Think "family-owned builder who shows up with a firm handshake" — not "rustic Instagram aesthetic." Short punchy sentences. Occasional cowboy flavor is fine ("raised," "posts in the ground," "pasture's empty") but use sparingly.
-
-## Known placeholders — still to replace
-
-- Gallery images (all Unsplash) — replace with real project photos in `images/`
-- Hero / About stock photos — also Unsplash
-- Owner name, year founded, specific license numbers — not yet on site
-
-Real contact info (phone `(352) 646-9090`, email `southern.barn.services@gmail.com`) and the canonical URL `https://southbarnservices.com` are now wired throughout the site.
-
-To find remaining placeholders: `grep -rn "unsplash\|picsum" .`
+Confident, grounded, plainspoken. Think "family-owned general contractor who shows up with a firm handshake." Short punchy sentences. Not corporate, not overly rural. Tag line: **Commercial & Residential**.
 
 ## Conventions
 
-- **Shared header/footer is duplicated across pages** (there is no template engine). If you add a nav link, update it on every `.html` file including `404.html`. A `python3` one-liner or Claude Code `sed` across files is the fastest way.
+- **Shared header/footer is duplicated across pages** (there is no template engine). If you add a nav link, update it on every `.html` file including `404.html`.
 - The `class="active"` attribute on the nav anchor marks the current page — preserve this per-page.
-- Void elements use the self-closing slash (`<meta ... />`, `<link ... />`) for XHTML-style consistency.
-- CSS is a single file. New components should use existing tokens and the `.card` / `.grid-N` / `.section.block` patterns rather than one-off styles.
+- The logo is a real image: `<img class="brand-logo" src="images/logo-perez.svg">` — update that file to change the brand image everywhere.
+- Void elements use the self-closing slash (`<meta ... />`, `<link ... />`).
+- CSS is a single file. New components should use existing `--pc-*` tokens and the `.card` / `.grid-N` / `.section.block` patterns rather than one-off styles.
 
 ## Deploy
 
-See `DEPLOY.md`. Summary: push to GitHub → connect repo in Netlify → done. Every `git push origin main` auto-deploys.
-
-## Roadmap / next steps
-
-1. Replace placeholder phone, email, and photos
-2. Custom domain + DNS (Netlify auto-provisions SSL)
-3. Wire Netlify Forms email notification in the Netlify dashboard
-4. Run an SEO audit against the live URL; target keywords like "pole barn builder Florida", "horse barn SW Florida", "pole barn Valdosta GA"
-5. Add Google Business Profile + embed reviews
-6. (Optional, only if a blog or CMS is needed) Migrate to Astro or Eleventy — the shared header/footer duplication is the main reason a framework would help
+See `DEPLOY.md`. Summary: push to GitHub → connected Cloudflare Pages project auto-builds and deploys.
 
 ## Things NOT to do without asking
 
 - Don't add a JavaScript framework "just in case"
 - Don't add analytics or tracking scripts without confirming privacy stance with the owner
-- Don't reword copy in a way that loses the Southern-heritage voice — "clean and corporate" is the wrong direction for this audience
+- Don't replace contact info with any Perez internal number or email — leads must flow through the owner's contact info
 - Don't inline images as base64; keep them in `images/`

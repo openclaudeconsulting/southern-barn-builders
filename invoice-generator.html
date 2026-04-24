@@ -3,34 +3,34 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Invoicer Pro — Southern Barn Builders LLC</title>
+<title>Invoicer Pro — Perez Construction LLC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-/* ---------- Tokens ---------- */
+/* ---------- Tokens (Perez Construction palette) ---------- */
 :root {
-  --sb-red: #8a1c1c;
-  --sb-red-dark: #5c0f0f;
-  --sb-green: #2f4a2a;
-  --sb-green-dark: #1e3119;
-  --sb-gold: #c9a227;
-  --sb-cream: #f7f1e3;
-  --sb-parchment: #fdf8ec;
-  --sb-ink: #1a1a1a;
-  --sb-muted: #5c5143;
-  --sb-border: #d8cdb3;
+  --sb-red: #1e3a5f;           /* navy — primary accent */
+  --sb-red-dark: #102338;      /* navy-dark */
+  --sb-green: #3d6bb4;         /* blue */
+  --sb-green-dark: #102338;    /* navy-dark — dark panels */
+  --sb-gold: #6d93c9;          /* sky-blue — highlight */
+  --sb-cream: #ffffff;         /* white */
+  --sb-parchment: #f8fafc;     /* off-white page */
+  --sb-ink: #0f172a;
+  --sb-muted: #475569;
+  --sb-border: #e2e8f0;
   --sb-surface: #ffffff;
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-body: "Outfit", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
 }
 
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; }
 body {
-  background: #e8e0d0;
+  background: #eaf1fa;
   font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
@@ -573,7 +573,7 @@ body {
   <!-- ===== SIDEBAR FORM ===== -->
   <div class="sidebar">
     <h1>Invoicer Pro</h1>
-    <p class="subtitle">Southern Barn Builders LLC</p>
+    <p class="subtitle">Perez Construction LLC</p>
 
     <h2>Invoice Details</h2>
     <div class="field-row">
@@ -637,17 +637,17 @@ body {
     </div>
     <div class="deposit-row" style="margin-top:8px">
       <label>Sales Tax Rate:</label>
-      <input type="number" id="taxRate" value="7" min="0" max="20" step="0.1" oninput="render()" />
+      <input type="number" id="taxRate" value="0" min="0" max="20" step="0.1" oninput="render()" />
       <label>%</label>
     </div>
 
     <h2>Notes &amp; Terms</h2>
     <div class="field">
-      <textarea id="invoiceNotes" rows="6" oninput="render()">50% deposit is due upon receipt of this invoice. The deposit secures your project slot and allows us to begin material procurement and scheduling. Concrete is not included.
+      <textarea id="invoiceNotes" rows="6" oninput="render()">50% deposit is due upon receipt of this invoice. The deposit secures your project slot and allows us to begin material procurement and scheduling. Concrete and rebar are not included unless listed as a line item.
 
 Balance is due upon project completion. We accept check, cash, Zelle, or bank transfer.
 
-This price includes all materials, all taxes on materials, delivery, and installation. Thank you for choosing Southern Barn Builders LLC.</textarea>
+This price includes all pole barn kit materials, all taxes on materials, and installation. Thank you for choosing Perez Construction LLC.</textarea>
     </div>
 
     <button class="btn btn-print" onclick="downloadPdf()">
@@ -815,9 +815,12 @@ function render() {
   let tableRows = '';
   items.forEach(it => {
     const total = it.qty * it.price;
+    const discBadge = (it.discount && it.discount > 0)
+      ? `<div style="color:var(--sb-red);font-size:11px;font-weight:600;margin-top:3px;letter-spacing:0.3px;">Bulk Price Discount ${it.discount}%</div>`
+      : '';
     tableRows += `
       <tr>
-        <td>${it.desc || '—'}</td>
+        <td>${it.desc || '—'}${discBadge}</td>
         <td>${it.qty}</td>
         <td>${money(it.price)}</td>
         <td>${money(total)}</td>
@@ -827,10 +830,10 @@ function render() {
   document.getElementById('invoicePreview').innerHTML = `
     <div class="inv-header">
       <div class="inv-brand">
-        <div class="inv-brand-mark">SB</div>
+        <div class="inv-brand-mark">PC</div>
         <div class="inv-brand-text">
-          <h2>Southern Barn Builders LLC</h2>
-          <p>Built Southern Strong</p>
+          <h2>Perez Construction LLC</h2>
+          <p>Commercial &amp; Residential</p>
         </div>
       </div>
       <div class="inv-title">
@@ -887,13 +890,13 @@ function render() {
     <div class="inv-specs">
       <h3>Kit Specifications${(items[0] && items[0].desc.match(/\d+\s*[xX]\s*\d+\s*[xX]\s*\d+/)) ? ' — ' + items[0].desc.match(/\d+\s*[xX]\s*\d+\s*[xX]\s*\d+/)[0] + ' Pole Barn' : ''}</h3>
       <ul>
-        <li>6x6 or 8x8 marine grade treated posts (trusses thru-bolted, not lag bolted)</li>
+        <li>8x8 marine grade treated posts (trusses thru-bolted, not lag bolted)</li>
         <li>2x6 purlins — #2 grade lumber</li>
         <li>29 gauge metal roofing &amp; siding (upgradeable to 26 gauge; color options available)</li>
         <li>2" angle iron steel trusses — rated for 150 mph winds</li>
-        <li>All materials, taxes on materials, delivery &amp; installation included</li>
+        <li>All materials, taxes on materials, and installation included</li>
       </ul>
-      <p class="spec-note">* Concrete is not included in this price.</p>
+      <p class="spec-note">* Concrete and rebar are not included unless listed as a line item above.</p>
     </div>
 
     <div class="inv-notes-totals">
@@ -911,10 +914,10 @@ function render() {
             <span class="label">Deposit (${depPct}%)</span>
             <span class="value">${money(deposit)}</span>
           </div>
-          <div class="inv-totals-row">
+          ${taxRatePct > 0 ? `<div class="inv-totals-row">
             <span class="label">Sales Tax (${taxRatePct}%)</span>
             <span class="value">${money(taxOnDeposit)}</span>
-          </div>
+          </div>` : ''}
           <div class="inv-totals-row deposit">
             <span class="label">Total Due Now</span>
             <span class="value">${money(amountDueNow)}</span>
@@ -928,8 +931,8 @@ function render() {
     </div>
 
     <div class="inv-bottom-strip">
-      <span>Southern Barn Builders LLC &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Serving FL &amp; GA</span>
-      <span>(352) 646-9090 &nbsp;&bull;&nbsp; <a href="mailto:southern.barn.services@gmail.com">southern.barn.services@gmail.com</a></span>
+      <span>Perez Construction LLC &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Commercial &amp; Residential</span>
+      <span>(352) 646-9090 &nbsp;&bull;&nbsp; <a href="mailto:Southern.Barn.Services@gmail.com">Southern.Barn.Services@gmail.com</a></span>
     </div>
   `;
 }

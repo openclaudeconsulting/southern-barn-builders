@@ -27,6 +27,8 @@ credentials.json
 token.json
 client_secret*.json
 .discord_webhook
+.discord_bot.env
+.anthropic_api_key
 
 # Generated quote PDFs (live in parent dir but exclude defensively)
 INVOICE*.pdf

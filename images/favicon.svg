@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#8a1c1c"/>
-  <rect x="3" y="3" width="58" height="58" fill="none" stroke="#c9a227" stroke-width="3"/>
+  <rect width="64" height="64" rx="8" fill="#1e3a5f"/>
+  <rect x="3" y="3" width="58" height="58" rx="6" fill="none" stroke="#6d93c9" stroke-width="2"/>
   <text x="32" y="44" text-anchor="middle"
-        font-family="Georgia, 'Playfair Display', serif"
-        font-size="34" font-weight="700" fill="#fdf8ec">SB</text>
+        font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif"
+        font-size="30" font-weight="800" fill="#ffffff" letter-spacing="-1">PC</text>
 </svg>

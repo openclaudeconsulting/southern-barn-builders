@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 96" role="img" aria-label="Perez Construction LLC">
+  <defs>
+    <style>
+      .pc-navy { fill: #1e3a5f; }
+      .pc-blue { fill: #6d93c9; }
+      .pc-line { fill: none; stroke: #1e3a5f; stroke-width: 1.5; }
+      .pc-text { font-family: Montserrat, 'Helvetica Neue', Arial, sans-serif; font-weight: 800; letter-spacing: -0.5px; fill: #1e3a5f; }
+      .pc-sub  { font-family: Montserrat, 'Helvetica Neue', Arial, sans-serif; font-weight: 700; letter-spacing: 3px; fill: #2c507f; }
+    </style>
+  </defs>
+
+  <!-- Left house silhouette (navy) -->
+  <g transform="translate(4, 14)">
+    <polygon class="pc-navy" points="0,54 0,26 24,4 48,26 48,54"/>
+    <rect class="pc-blue" x="18" y="34" width="12" height="20"/>
+  </g>
+
+  <!-- Right house silhouette (light blue, slightly smaller) -->
+  <g transform="translate(44, 22)">
+    <polygon class="pc-blue" points="0,46 0,22 20,4 40,22 40,46"/>
+    <rect class="pc-navy" x="14" y="28" width="12" height="18"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text class="pc-text" x="100" y="48" font-size="22">PEREZ CONSTRUCTION</text>
+  <text class="pc-sub"  x="100" y="70" font-size="10">COMMERCIAL &amp; RESIDENTIAL</text>
+</svg>

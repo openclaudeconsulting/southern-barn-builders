@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Service Area | Southern Barn Builders LLC</title>
-<meta name="description" content="Southern Barn Builders serves all of Florida and South Georgia -- from the Keys to the Panhandle and up into Valdosta, Tifton, Waycross, and beyond." />
+<title>Service Area | Perez Construction LLC</title>
+<meta name="description" content="Perez Construction LLC serves all of Florida and South Georgia — from the Keys to the Panhandle and up into Valdosta, Tifton, Waycross, and beyond." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="css/styles.css" />
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-<meta property="og:site_name" content="Southern Barn Builders LLC" />
+<meta property="og:site_name" content="Perez Construction LLC" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Service Area | Southern Barn Builders LLC" />
-<meta property="og:description" content="Headquartered in Southwest Florida, serving every county in Florida and reaching up into South Georgia." />
+<meta property="og:title" content="Service Area | Perez Construction LLC" />
+<meta property="og:description" content="Headquartered in Florida, serving every county in Florida and reaching up into South Georgia." />
 <meta name="twitter:card" content="summary_large_image" />
 <style>
   .map-section { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
@@ -34,7 +34,7 @@
   .map-visual-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(160deg, rgba(30,49,25,0.82) 0%, rgba(92,15,15,0.7) 100%);
+    background: linear-gradient(160deg, rgba(30,58,95,0.88) 0%, rgba(61,107,180,0.72) 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +46,7 @@
   .map-visual-overlay .pin-icon {
     width: 48px;
     height: 48px;
-    background: var(--sb-gold);
+    background: var(--pc-sky);
     border-radius: 50% 50% 50% 0;
     transform: rotate(-45deg);
     display: flex;
@@ -57,21 +57,22 @@
   }
   .map-visual-overlay .pin-icon span {
     transform: rotate(45deg);
-    font-family: var(--font-serif);
-    font-weight: 700;
-    color: var(--sb-green-dark);
-    font-size: 1.1rem;
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--pc-navy-dark);
+    font-size: 1rem;
+    letter-spacing: -0.5px;
   }
   .map-visual-overlay .pin-label {
-    color: var(--sb-cream);
-    font-family: var(--font-serif);
+    color: var(--pc-white);
+    font-family: var(--font-display);
     font-size: 1.6rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.01em;
     line-height: 1.3;
   }
   .map-visual-overlay .pin-sub {
-    color: rgba(247,241,227,0.7);
+    color: rgba(255,255,255,0.8);
     font-size: 0.88rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -84,9 +85,9 @@
   }
   .map-visual-overlay .state-badge {
     padding: 6px 16px;
-    border: 1px solid rgba(247,241,227,0.3);
+    border: 1px solid rgba(255,255,255,0.35);
     border-radius: 4px;
-    color: var(--sb-cream);
+    color: var(--pc-white);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 1px;
@@ -97,12 +98,12 @@
     background: #fff;
     border-radius: 8px;
     padding: 28px 24px;
-    border: 1px solid rgba(216,205,179,0.5);
-    box-shadow: 0 4px 24px rgba(107,68,35,0.08);
+    border: 1px solid var(--pc-border);
+    box-shadow: 0 4px 24px rgba(30,58,95,0.08);
     transition: box-shadow 0.3s ease, transform 0.3s ease;
   }
   .map-card:hover {
-    box-shadow: 0 8px 32px rgba(107,68,35,0.14);
+    box-shadow: 0 8px 32px rgba(30,58,95,0.14);
     transform: translateY(-2px);
   }
   .map-card h3 { margin-top: 0; margin-bottom: 8px; font-size: 1.15rem; }
@@ -116,10 +117,10 @@
     border-radius: 3px;
     margin-bottom: 12px;
   }
-  .map-card .region-tag.fl { background: rgba(138,28,28,0.1); color: #8a1c1c; }
-  .map-card .region-tag.ga { background: rgba(47,74,42,0.1); color: #2f4a2a; }
-  .map-card .region-tag.hq { background: rgba(201,162,39,0.15); color: #8a7518; }
-  .map-card p { color: #5c5143; margin: 0; font-size: 0.95rem; line-height: 1.65; }
+  .map-card .region-tag.fl { background: rgba(61,107,180,0.12); color: #2a5390; }
+  .map-card .region-tag.ga { background: rgba(30,58,95,0.12); color: #1e3a5f; }
+  .map-card .region-tag.hq { background: rgba(109,147,201,0.18); color: #2a5390; }
+  .map-card p { color: var(--pc-muted); margin: 0; font-size: 0.95rem; line-height: 1.65; }
 
   @media (max-width: 880px) {
     .map-section { grid-template-columns: 1fr; }
@@ -133,18 +134,18 @@
 
 <div class="topbar">
   <div class="container">
-    <span>(352) 646-9090 &nbsp;|&nbsp; southern.barn.services@gmail.com</span>
-    <span>Licensed &amp; Insured &middot; Serving FL &amp; GA</span>
+    <span>(352) 646-9090 &nbsp;|&nbsp; Southern.Barn.Services@gmail.com</span>
+    <span>Licensed &amp; Insured &middot; Commercial &amp; Residential</span>
   </div>
 </div>
 
 <header class="site-header">
   <div class="container">
     <a class="brand" href="index.html">
-      <span class="brand-mark">SB</span>
+      <img class="brand-logo" src="images/logo-perez.svg" alt="Perez Construction LLC logo" />
       <span>
-        <span class="brand-name">Southern Barn Builders</span><br/>
-        <span class="brand-tag">Built Southern Strong &middot; Est. Florida</span>
+        <span class="brand-name">Perez Construction LLC</span><br/>
+        <span class="brand-tag">Commercial &amp; Residential</span>
       </span>
     </a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" onclick="document.querySelector('.main-nav').classList.toggle('open');document.querySelector('.nav-overlay').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='false')">
@@ -171,7 +172,7 @@
   <div class="container">
     <span class="hero-badge">FL + GA</span>
     <h1>Where We Build</h1>
-    <p>Headquartered in Southwest Florida, serving every county in the Sunshine State and stretching up into South Georgia.</p>
+    <p>Headquartered in Florida, serving every county in the Sunshine State and stretching up into South Georgia.</p>
   </div>
 </section>
 
@@ -187,9 +188,9 @@
       <div class="map-visual">
         <img src="images/IMG_0692.jpg" alt="Large completed pole barn on open Southern land" loading="lazy" />
         <div class="map-visual-overlay">
-          <div class="pin-icon"><span>SB</span></div>
-          <div class="pin-label">Southwest Florida<br/>to South Georgia</div>
-          <div class="pin-sub">Headquartered in SW Florida</div>
+          <div class="pin-icon"><span>PC</span></div>
+          <div class="pin-label">Florida<br/>to South Georgia</div>
+          <div class="pin-sub">Headquartered in Florida</div>
           <div class="state-badges">
             <span class="state-badge">All of FL</span>
             <span class="state-badge">South GA</span>
@@ -201,7 +202,7 @@
         <div class="map-card">
           <span class="region-tag fl">Florida</span>
           <h3>All Counties Covered</h3>
-          <p>From the Panhandle to the Keys, we build across every Florida county. Headquartered in Southwest Florida with crews traveling statewide.</p>
+          <p>From the Panhandle to the Keys, we build across every Florida county. Headquartered in Florida with crews traveling statewide.</p>
         </div>
         <div class="map-card">
           <span class="region-tag ga">South Georgia</span>
@@ -210,8 +211,8 @@
         </div>
         <div class="map-card">
           <span class="region-tag hq">Headquarters</span>
-          <h3>Southwest Florida</h3>
-          <p>Our home base. One team, one point of contact, whether your land is 20 miles away or 200.</p>
+          <h3>Florida</h3>
+          <p>Our home base. One team, one point of contact, whether your project is 20 miles away or 200.</p>
         </div>
       </div>
     </div>
@@ -222,7 +223,7 @@
   <div class="container">
     <div class="section-title reveal">
       <div class="section-kicker">Florida Regions</div>
-      <h2>All of Florida -- Panhandle to the Keys</h2>
+      <h2>All of Florida — Panhandle to the Keys</h2>
       <span class="divider"></span>
     </div>
     <ul class="region-list reveal">
@@ -267,14 +268,14 @@
       <li>Adel</li>
       <li>Fitzgerald</li>
     </ul>
-    <p class="text-center lead" style="margin-top:32px;">Don't see your town? Reach out anyway -- we travel for the right project.</p>
+    <p class="text-center lead" style="margin-top:32px;">Don't see your town? Reach out anyway — we travel for the right project.</p>
   </div>
 </section>
 
 <section class="cta-banner">
   <div class="container">
-    <h2>Florida or Georgia -- We'll Be There.</h2>
-    <p>One call starts it all. Tell us where your land is and we'll let you know when we can walk it.</p>
+    <h2>Florida or Georgia — We'll Be There.</h2>
+    <p>One call starts it all. Tell us where the project is and we'll let you know when we can walk it.</p>
     <a href="contact.html" class="btn btn-light">Request a Quote</a>
   </div>
 </section>
@@ -285,8 +286,8 @@
   <div class="container">
     <div class="grid-3">
       <div>
-        <h4>Southern Barn Builders LLC</h4>
-        <p>Custom pole barns, equestrian facilities, and agricultural buildings across Florida and South Georgia.</p>
+        <h4>Perez Construction LLC</h4>
+        <p>Commercial &amp; residential contractor — roofing, pole barns, fencing, porches, decks, steps, and more across Florida and South Georgia.</p>
         <p>Licensed &amp; Insured</p>
       </div>
       <div>
@@ -302,13 +303,13 @@
       <div>
         <h4>Get In Touch</h4>
         <p>(352) 646-9090<br/>
-           southern.barn.services@gmail.com<br/>
-           Southwest Florida HQ<br/>
+           Southern.Barn.Services@gmail.com<br/>
+           Florida HQ<br/>
            <em>Serving all of FL &amp; South GA</em></p>
       </div>
     </div>
     <div class="footer-bottom">
-      &copy; <span id="yr"></span> Southern Barn Builders LLC. All rights reserved.
+      &copy; <span id="yr"></span> Perez Construction LLC. All rights reserved.
     </div>
   </div>
 </footer>

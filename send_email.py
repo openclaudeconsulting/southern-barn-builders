@@ -52,7 +52,7 @@ def get_service():
     return build("gmail", "v1", credentials=creds)
 
 
-def build_message(to, subject, body, attachment=None, sender=None):
+def build_message(to, subject, body, attachments=None, sender=None):
     msg = EmailMessage()
     msg["To"] = to
     msg["Subject"] = subject
@@ -60,7 +60,7 @@ def build_message(to, subject, body, attachment=None, sender=None):
         msg["From"] = sender
     msg.set_content(body)
 
-    if attachment:
+    for attachment in (attachments or []):
         path = Path(attachment)
         if not path.exists():
             sys.exit(f"ERROR: attachment not found: {attachment}")
@@ -80,13 +80,14 @@ def main():
     ap.add_argument("--to", required=True)
     ap.add_argument("--subject", required=True)
     ap.add_argument("--body", required=True)
-    ap.add_argument("--attachment", default=None, help="Path to a file to attach")
+    ap.add_argument("--attachment", default=[], action="append", help="Path to a file to attach (can be repeated for multiple attachments)")
     ap.add_argument("--send", action="store_true", help="Actually send (default: save as draft)")
     ap.add_argument("--from", dest="sender", default=None, help="Override From header")
     args = ap.parse_args()
 
     service = get_service()
     message_body = build_message(args.to, args.subject, args.body, args.attachment, args.sender)
+
 
     try:
         if args.send:

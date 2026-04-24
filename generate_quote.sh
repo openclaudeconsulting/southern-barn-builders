@@ -31,6 +31,9 @@ NO_POST=""
 NOTES=""
 EXTRA_ITEMS=()
 SUBTOTAL=""
+QTY="1"
+TAX_RATE=""
+DEPOSIT_PCT=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -42,9 +45,12 @@ while [[ $# -gt 0 ]]; do
     --kit-desc) KIT_DESC="$2"; shift 2;;
     --kit-price) KIT_PRICE="$2"; shift 2;;
     --subtotal) SUBTOTAL="$2"; shift 2;;
+    --qty) QTY="$2"; shift 2;;
     --extra-item) EXTRA_ITEMS+=("$2"); shift 2;;
     --labor-price) LABOR_PRICE="$2"; shift 2;;
     --travel-price) TRAVEL_PRICE="$2"; shift 2;;
+    --tax-rate) TAX_RATE="$2"; shift 2;;
+    --deposit-pct) DEPOSIT_PCT="$2"; shift 2;;
     --output) OUTPUT="$2"; shift 2;;
     --notes) NOTES="$2"; shift 2;;
     --no-post) NO_POST="1"; shift;;
@@ -53,15 +59,18 @@ while [[ $# -gt 0 ]]; do
 done
 
 # If --subtotal is given, randomly split kit + labor so both look calculated
-# and unique per quote. labor picks a random value in a small window;
-# kit = subtotal - labor - (extras).
+# and unique per quote. Subtotal is PER UNIT (kit+labor for one barn).
+# Labor picks a random value in a small window; kit_unit = subtotal - labor - extras/qty.
+# Both kit and labor lines on the PDF use qty=QTY so the amounts scale.
 if [[ -n "$SUBTOTAL" ]]; then
   EXTRAS_PIPE_SUM=$(IFS=$'\x1f'; echo "${EXTRA_ITEMS[*]}")
   export SB_EXTRAS_SUM_IN="$EXTRAS_PIPE_SUM"
   export SB_SUBTOTAL="$SUBTOTAL"
+  export SB_QTY="$QTY"
   read_out=$(python -c "
 import os, random
-subtotal = float(os.environ['SB_SUBTOTAL'])
+subtotal_per_unit = float(os.environ['SB_SUBTOTAL'])
+qty = max(1, int(os.environ.get('SB_QTY', '1')))
 raw = os.environ.get('SB_EXTRAS_SUM_IN','')
 extras_sum = 0.0
 if raw:
@@ -70,10 +79,11 @@ if raw:
             _, price = entry.rsplit('|', 1)
             try: extras_sum += float(price)
             except: pass
-# Labor range $5,430.00 - $5,549.99 with cents → always looks calculated & unique
-labor = round(random.uniform(5430, 5549.99), 2)
-kit = round(subtotal - labor - extras_sum, 2)
-print(f'{kit:.2f} {labor:.2f}')
+# Labor range $5,430.00 - $5,549.99 with cents → always looks calculated & unique (per unit)
+labor_unit = round(random.uniform(5430, 5549.99), 2)
+# Kit per-unit = subtotal - labor (per-unit) - extras divided across units
+kit_unit_price = round(subtotal_per_unit - labor_unit - (extras_sum / qty), 2)
+print(f'{kit_unit_price:.2f} {labor_unit:.2f}')
 ")
   KIT_PRICE=$(echo "$read_out" | awk '{print $1}')
   LABOR_PRICE=$(echo "$read_out" | awk '{print $2}')
@@ -94,24 +104,55 @@ urlenc() {
   python -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1]))" "$1"
 }
 
-# Build items JSON via Python so special chars in descs are escaped safely
+# Build items JSON via Python so special chars in descs are escaped safely.
+# Only the kit line uses --qty; labor and travel are always qty=1 (one project).
 export SB_KIT_DESC="$KIT_DESC"
 export SB_KIT_PRICE="$KIT_PRICE"
 export SB_LABOR_PRICE="$LABOR_PRICE"
 export SB_TRAVEL_PRICE="$TRAVEL_PRICE"
+export SB_QTY="$QTY"
 EXTRAS_PIPE=$(IFS=$'\x1f'; echo "${EXTRA_ITEMS[*]}")
 export SB_EXTRAS="$EXTRAS_PIPE"
 
 ITEMS_JSON=$(python -c "
-import json, os
-items = [{'desc': os.environ['SB_KIT_DESC'], 'qty': 1, 'price': float(os.environ['SB_KIT_PRICE'])}]
+import json, os, re
+qty = max(1, int(os.environ.get('SB_QTY', '1')))
+kit_desc = os.environ['SB_KIT_DESC']
+kit_unit = float(os.environ['SB_KIT_PRICE'])
+labor_unit = float(os.environ['SB_LABOR_PRICE'])
+
+# Compute bulk-discount badges.
+# Base labor rate = \$2/sqft. If actual per-unit labor falls below that, the
+# labor line gets a 'Bulk Price Discount N%' badge. The kit line gets the
+# same percentage MINUS 4 points (display-only; the kit price doesn't actually
+# change — it's a marketing cue so the customer feels they're getting a deal).
+labor_disc = 0
+kit_disc = 0
+dims = re.search(r'(\d+)\s*[xX]\s*(\d+)', kit_desc)
+if dims:
+    sqft = int(dims.group(1)) * int(dims.group(2))
+    base_labor = 2.0 * sqft
+    if base_labor > 0 and labor_unit < base_labor:
+        labor_disc = round((base_labor - labor_unit) / base_labor * 100)
+        kit_disc = max(0, labor_disc - 4)
+
+kit_item = {'desc': kit_desc, 'qty': qty, 'price': kit_unit}
+if kit_disc > 0:
+    kit_item['discount'] = kit_disc
+items = [kit_item]
+
 raw = os.environ.get('SB_EXTRAS','')
 if raw:
     for entry in raw.split('\x1f'):
         if '|' in entry:
             desc, price = entry.rsplit('|', 1)
             items.append({'desc': desc, 'qty': 1, 'price': float(price)})
-items.append({'desc': 'Professional Installation & Labor', 'qty': 1, 'price': float(os.environ['SB_LABOR_PRICE'])})
+
+labor_item = {'desc': 'Professional Installation & Labor', 'qty': qty, 'price': labor_unit}
+if labor_disc > 0:
+    labor_item['discount'] = labor_disc
+items.append(labor_item)
+
 items.append({'desc': 'Travel & Site Mobilization', 'qty': 1, 'price': float(os.environ['SB_TRAVEL_PRICE'])})
 print(json.dumps(items))
 ")
@@ -125,6 +166,12 @@ URL+="&state=$(urlenc "$STATE")"
 URL+="&items=$(urlenc "$ITEMS_JSON")"
 if [[ -n "$NOTES" ]]; then
   URL+="&notes=$(urlenc "$NOTES")"
+fi
+if [[ -n "$TAX_RATE" ]]; then
+  URL+="&tax=$(urlenc "$TAX_RATE")"
+fi
+if [[ -n "$DEPOSIT_PCT" ]]; then
+  URL+="&deposit=$(urlenc "$DEPOSIT_PCT")"
 fi
 
 echo "Generating PDF..."
@@ -175,6 +222,8 @@ if [[ -z "$NO_POST" && -f "$WEBHOOK_FILE" ]]; then
     export SB_NUM="$NUM"
     export SB_KIT_DESC="$KIT_DESC"
     export SB_ITEMS_JSON="$ITEMS_JSON"
+    export SB_TAX_RATE="${TAX_RATE:-0}"
+    export SB_DEPOSIT_PCT="${DEPOSIT_PCT:-50}"
 
     PAYLOAD_JSON=$(python -c "
 import json, os
@@ -183,16 +232,28 @@ num = os.environ['SB_NUM']
 kit = os.environ['SB_KIT_DESC']
 items = json.loads(os.environ['SB_ITEMS_JSON'])
 subtotal = sum(i['qty'] * i['price'] for i in items)
-deposit = subtotal * 0.5
-tax = deposit * 0.07
+dep_pct = float(os.environ.get('SB_DEPOSIT_PCT', '50'))
+tax_pct = float(os.environ.get('SB_TAX_RATE', '7'))
+deposit = subtotal * (dep_pct / 100.0)
+tax = deposit * (tax_pct / 100.0)
 total_now = deposit + tax
 doc_type = 'QUOTE' if 'Q' in num.upper().split('-') else 'INVOICE'
-content = (
-    f'**New {doc_type} — {name}** ({num})\n'
-    f'{kit}\n'
-    f'Subtotal: \${subtotal:,.2f} · Deposit (50%): \${deposit:,.2f} · Tax (7%): \${tax:,.2f}\n'
-    f'**Total Due Now: \${total_now:,.2f}**'
-)
+dep_label = f'{dep_pct:g}%'
+tax_label = f'{tax_pct:g}%'
+if tax_pct == 0:
+    content = (
+        f'**New {doc_type} — {name}** ({num})\n'
+        f'{kit}\n'
+        f'Subtotal: \${subtotal:,.2f} · Deposit ({dep_label}): \${deposit:,.2f} · Tax-exempt\n'
+        f'**Total Due Now: \${total_now:,.2f}**'
+    )
+else:
+    content = (
+        f'**New {doc_type} — {name}** ({num})\n'
+        f'{kit}\n'
+        f'Subtotal: \${subtotal:,.2f} · Deposit ({dep_label}): \${deposit:,.2f} · Tax ({tax_label}): \${tax:,.2f}\n'
+        f'**Total Due Now: \${total_now:,.2f}**'
+    )
 print(json.dumps({'content': content}))
 ")
 
