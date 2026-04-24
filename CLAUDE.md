@@ -4,7 +4,7 @@ This file is auto-loaded by Claude Code. It orients you to the project without n
 
 ## What this is
 
-A static marketing website for **G&P Steel Trusses**, a commercial and residential contractor serving Florida and South Georgia. G&P fabricates, supplies, and installs steel trusses, and also handles roofing, pole barn installation, fencing, porches, decks, steps, garages, and workshops. Audience is homeowners, ranchers, landowners, and commercial clients.
+A static marketing website for **G&P Steel Trusses**, a commercial and residential pole-barn-structure specialist serving Florida and South Georgia. G&P fabricates, supplies, and installs pole-barn structures — **barns, barndominiums, stables, workshops, garages, and custom pole-barn builds**. That's the entire scope — do NOT advertise roofing, fencing, porches, decks, or steps as standalone services. Audience is homeowners, ranchers, landowners, and commercial clients.
 
 ## Important — sales-rep arrangement
 
