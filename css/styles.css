@@ -1077,6 +1077,7 @@ section.block.cool {
   display: flex;
   flex-direction: column;
   margin-bottom: 18px;
+  min-width: 0; /* allow shrinking below intrinsic content width in grid cells */
 }
 .form-field label {
   font-weight: 700;
@@ -1089,6 +1090,8 @@ section.block.cool {
 .form-field input,
 .form-field select,
 .form-field textarea {
+  width: 100%;
+  max-width: 100%;
   font-family: var(--font-body);
   font-size: 1rem;
   padding: 12px 16px;
