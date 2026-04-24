@@ -218,11 +218,37 @@ strong { color: var(--pc-navy-dark); }
 .brand {
   display: flex;
   align-items: center;
-  gap: 0;
+  gap: 14px;
   text-decoration: none;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .brand:hover { transform: translateY(-1px); }
+.brand-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+  background: var(--pc-grad-cta);
+  border: 2px solid var(--pc-navy-dark);
+  border-radius: 10px;
+  padding: 10px 12px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  box-shadow: 0 4px 14px rgba(20, 48, 79, 0.25);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.brand:hover .brand-mark {
+  box-shadow: 0 6px 18px rgba(199, 125, 31, 0.35);
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
 .brand-logo {
   height: 68px;
   width: auto;
@@ -233,7 +259,6 @@ strong { color: var(--pc-navy-dark); }
 .brand:hover .brand-logo {
   filter: drop-shadow(0 4px 12px rgba(199, 125, 31, 0.25));
 }
-/* Legacy brand-name/tag kept for pages that still render them */
 .brand-name {
   font-family: var(--font-display);
   color: var(--pc-navy-dark);

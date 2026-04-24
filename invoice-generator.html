@@ -3,25 +3,52 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Invoicer Pro — Perez Construction LLC</title>
+<title>Invoicer Pro — G&P Steel Trusses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-/* ---------- Tokens (Perez Construction palette) ---------- */
+/* ---------- Tokens (G&P Steel Trusses — navy + amber) ---------- */
 :root {
-  --sb-red: #1e3a5f;           /* navy — primary accent */
-  --sb-red-dark: #102338;      /* navy-dark */
-  --sb-green: #3d6bb4;         /* blue */
-  --sb-green-dark: #102338;    /* navy-dark — dark panels */
-  --sb-gold: #6d93c9;          /* sky-blue — highlight */
-  --sb-cream: #ffffff;         /* white */
-  --sb-parchment: #f8fafc;     /* off-white page */
-  --sb-ink: #0f172a;
-  --sb-muted: #475569;
-  --sb-border: #e2e8f0;
-  --sb-surface: #ffffff;
+  --pc-navy: #14304f;
+  --pc-navy-dark: #0c1e33;
+  --pc-navy-light: #26456f;
+  --pc-blue: #3d6bb4;
+  --pc-blue-dark: #2a5390;
+  --pc-blue-light: #6d93c9;
+  --pc-sky: #b8d0ec;
+  --pc-sky-soft: #eaf1fa;
+
+  --pc-amber: #e9a23b;
+  --pc-amber-dark: #c77d1f;
+  --pc-amber-light: #f5c97e;
+  --pc-amber-soft: #fce8c7;
+  --pc-copper: #b86a2f;
+
+  --pc-cream: #fbf6ec;
+  --pc-parchment: #f4ebd6;
+  --pc-offwhite: #fbf8f2;
+
+  --pc-ink: #1a2030;
+  --pc-muted: #556175;
+  --pc-border: #e8e1d1;
+  --pc-border-cool: #dbe2ec;
+  --pc-surface: #ffffff;
+
+  /* Legacy aliases — keep names that the rest of the stylesheet references */
+  --sb-red: var(--pc-amber-dark);      /* warm accent (brand mark bg) */
+  --sb-red-dark: var(--pc-copper);
+  --sb-green: var(--pc-blue);
+  --sb-green-dark: var(--pc-navy);     /* primary dark panels (header + footer strip) */
+  --sb-gold: var(--pc-amber);          /* amber highlight — QUOTE/INVOICE title, accent bar */
+  --sb-cream: var(--pc-cream);
+  --sb-parchment: var(--pc-offwhite);
+  --sb-ink: var(--pc-ink);
+  --sb-muted: var(--pc-muted);
+  --sb-border: var(--pc-border);
+  --sb-surface: var(--pc-surface);
+
   --font-serif: "Montserrat", "Helvetica Neue", Arial, sans-serif;
   --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
 }
@@ -233,7 +260,7 @@ body {
 
 /* Invoice header bar */
 .inv-header {
-  background: var(--sb-green-dark);
+  background: linear-gradient(135deg, var(--pc-navy-dark) 0%, var(--pc-navy) 55%, var(--pc-blue-dark) 100%);
   color: #fff;
   padding: 32px 40px;
   display: flex;
@@ -248,17 +275,18 @@ body {
 .inv-brand-mark {
   width: 56px;
   height: 56px;
-  background: var(--sb-red);
-  border-radius: 6px;
+  background: linear-gradient(135deg, var(--pc-amber-light) 0%, var(--pc-amber) 55%, var(--pc-amber-dark) 100%);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--sb-gold);
-  letter-spacing: 1px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--pc-navy-dark);
+  letter-spacing: 0.5px;
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(199, 125, 31, 0.3);
 }
 .inv-brand-text h2 {
   font-family: var(--font-serif);
@@ -287,13 +315,13 @@ body {
 }
 .inv-title p {
   font-size: 13px;
-  color: #a8c0a0;
+  color: var(--pc-sky);
 }
 
-/* Gold accent bar */
+/* Amber accent bar (matches site hero accent) */
 .inv-accent {
   height: 4px;
-  background: linear-gradient(90deg, var(--sb-gold), var(--sb-red), var(--sb-gold));
+  background: linear-gradient(90deg, var(--pc-amber-light) 0%, var(--pc-amber) 50%, var(--pc-copper) 100%);
 }
 
 /* Info section */
@@ -476,8 +504,8 @@ body {
 
 /* Company footer strip */
 .inv-bottom-strip {
-  background: var(--sb-green-dark);
-  color: #a8c0a0;
+  background: linear-gradient(135deg, var(--pc-navy-dark) 0%, var(--pc-navy) 60%, var(--pc-blue-dark) 100%);
+  color: var(--pc-sky);
   padding: 14px 40px;
   display: flex;
   justify-content: space-between;
@@ -573,7 +601,7 @@ body {
   <!-- ===== SIDEBAR FORM ===== -->
   <div class="sidebar">
     <h1>Invoicer Pro</h1>
-    <p class="subtitle">Perez Construction LLC</p>
+    <p class="subtitle">G&P Steel Trusses</p>
 
     <h2>Invoice Details</h2>
     <div class="field-row">
@@ -647,7 +675,7 @@ body {
 
 Balance is due upon project completion. We accept check, cash, Zelle, or bank transfer.
 
-This price includes all pole barn kit materials, all taxes on materials, and installation. Thank you for choosing Perez Construction LLC.</textarea>
+This price includes all pole barn kit materials, all taxes on materials, and installation. Thank you for choosing G&P Steel Trusses.</textarea>
     </div>
 
     <button class="btn btn-print" onclick="downloadPdf()">
@@ -832,7 +860,7 @@ function render() {
       <div class="inv-brand">
         <div class="inv-brand-mark">PC</div>
         <div class="inv-brand-text">
-          <h2>Perez Construction LLC</h2>
+          <h2>G&P Steel Trusses</h2>
           <p>Commercial &amp; Residential</p>
         </div>
       </div>
@@ -931,7 +959,7 @@ function render() {
     </div>
 
     <div class="inv-bottom-strip">
-      <span>Perez Construction LLC &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Commercial &amp; Residential</span>
+      <span>G&P Steel Trusses &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Commercial &amp; Residential</span>
       <span>(352) 646-9090 &nbsp;&bull;&nbsp; <a href="mailto:Southern.Barn.Services@gmail.com">Southern.Barn.Services@gmail.com</a></span>
     </div>
   `;

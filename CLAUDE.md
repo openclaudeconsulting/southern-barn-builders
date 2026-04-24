@@ -1,18 +1,18 @@
-# Project Briefing — Perez Construction LLC Website
+# Project Briefing — G&P Steel Trusses Website
 
 This file is auto-loaded by Claude Code. It orients you to the project without needing to re-read every file.
 
 ## What this is
 
-A static marketing website for **Perez Construction LLC**, a commercial and residential general contractor serving Florida and South Georgia. Core services are **roofing, pole barn installation, fencing, porches, decks, steps, garages, and workshops**. Audience is homeowners, ranchers, landowners, and commercial clients.
+A static marketing website for **G&P Steel Trusses**, a commercial and residential contractor serving Florida and South Georgia. G&P fabricates, supplies, and installs steel trusses, and also handles roofing, pole barn installation, fencing, porches, decks, steps, garages, and workshops. Audience is homeowners, ranchers, landowners, and commercial clients.
 
 ## Important — sales-rep arrangement
 
-The site owner is NOT Perez Construction. The owner runs a sales/referral operation: leads are captured through this site and referred to Perez Construction for fulfillment. The owner keeps the margin above Perez's cost. Therefore:
+The site owner is NOT G&P Steel Trusses. The owner runs a sales/referral operation: leads are captured through this site and referred to G&P for fulfillment. The owner keeps the margin above G&P's cost. Therefore:
 
 - Contact info on the site must always be the owner's: **(352) 646-9090** and **Southern.Barn.Services@gmail.com** — so leads flow through the owner.
-- Do NOT put Perez's internal phone numbers (Gilmer or Robert) anywhere.
-- The brand, logo, and service lineup belong to Perez Construction LLC.
+- Do NOT put G&P's or any subcontractor's internal phone numbers anywhere.
+- The brand and service lineup belong to G&P Steel Trusses. No official logo yet — header uses a text "G&P" monogram + wordmark as placeholder.
 
 ## Stack
 
@@ -34,9 +34,8 @@ southern-barn-builders/
 ├── contact.html         Quote form (Formsubmit.co) + direct contact info
 ├── 404.html             Branded not-found page
 ├── css/styles.css       All styles (variables, sections, responsive)
-├── images/favicon.svg   PC monogram favicon (navy on white)
-├── images/logo-perez.svg  Main brand logo (referenced in <header>)
-├── images/              Real project photos (IMG_*.jpg)
+├── images/favicon.svg   Monogram favicon (navy on white)
+├── images/              Real project photos (IMG_*.jpg). No brand logo file — header uses a text monogram placeholder.
 ├── sitemap.xml          URL list for Google Search Console
 ├── robots.txt           Allow all + sitemap pointer
 ├── _headers             Cloudflare Pages security headers
@@ -74,7 +73,7 @@ Confident, grounded, plainspoken. Think "family-owned general contractor who sho
 
 - **Shared header/footer is duplicated across pages** (there is no template engine). If you add a nav link, update it on every `.html` file including `404.html`.
 - The `class="active"` attribute on the nav anchor marks the current page — preserve this per-page.
-- The logo is a real image: `<img class="brand-logo" src="images/logo-perez.svg">` — update that file to change the brand image everywhere.
+- The brand header is a text placeholder: `<span class="brand-mark">G&amp;P</span>` (navy gradient monogram box) + `<span class="brand-text">` wrapper containing `.brand-name` and `.brand-tag`. When a real logo is provided, swap this for an `<img class="brand-logo">` and the existing `.brand-logo` CSS rule will style it.
 - Void elements use the self-closing slash (`<meta ... />`, `<link ... />`).
 - CSS is a single file. New components should use existing `--pc-*` tokens and the `.card` / `.grid-N` / `.section.block` patterns rather than one-off styles.
 
@@ -86,5 +85,5 @@ See `DEPLOY.md`. Summary: push to GitHub → connected Cloudflare Pages project 
 
 - Don't add a JavaScript framework "just in case"
 - Don't add analytics or tracking scripts without confirming privacy stance with the owner
-- Don't replace contact info with any Perez internal number or email — leads must flow through the owner's contact info
+- Don't replace contact info with any G&P internal number or email — leads must flow through the owner's contact info
 - Don't inline images as base64; keep them in `images/`
