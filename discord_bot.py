@@ -18,10 +18,43 @@ import asyncio
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+
+
+# ---------- Bash discovery ----------
+# When the bot runs under a Windows scheduled task, the PATH it inherits picks
+# up C:\Windows\System32\bash.exe (WSL launcher) before Git Bash, and WSL's
+# /bin/bash exec fails (no distro). Resolve Git Bash explicitly so we always
+# invoke the same shell Carson uses interactively, regardless of how the bot
+# was started.
+GIT_BASH_CANDIDATES = (
+    r"C:\Program Files\Git\bin\bash.exe",
+    r"C:\Program Files (x86)\Git\bin\bash.exe",
+    r"C:\Program Files\Git\usr\bin\bash.exe",
+)
+
+
+def resolve_bash() -> str:
+    """Return an absolute path to a usable bash.exe (Git Bash preferred)."""
+    for candidate in GIT_BASH_CANDIDATES:
+        if Path(candidate).is_file():
+            return candidate
+    # Last resort: whatever 'bash' resolves to on PATH. Skip the WSL launcher
+    # in System32 which crashes when invoked without a distro.
+    found = shutil.which("bash")
+    if found and "system32" not in found.lower():
+        return found
+    raise FileNotFoundError(
+        "Could not locate a usable bash.exe. Install Git for Windows "
+        "(which provides C:\\Program Files\\Git\\bin\\bash.exe) and rerun."
+    )
+
+
+BASH_EXE = resolve_bash()
 
 # Force UTF-8 stdout/stderr so emoji characters in Discord messages don't
 # crash the Windows cp1252 console when printed.
@@ -252,7 +285,7 @@ def run_full_quote(args: list[str]) -> tuple[bool, str]:
     """Run full_quote.sh with args. Returns (success, combined_output)."""
     try:
         result = subprocess.run(
-            ["bash", str(FULL_QUOTE_SCRIPT), *args],
+            [BASH_EXE, str(FULL_QUOTE_SCRIPT), *args],
             capture_output=True,
             text=True,
             timeout=180,
@@ -278,6 +311,7 @@ def build_bot(env: dict, claude_client: Anthropic) -> discord.Client:
     async def on_ready():
         print(f"Bot logged in as {client.user} (id {client.user.id})", flush=True)
         print(f"Listening to channel id {todo_channel_id}", flush=True)
+        print(f"Bash binary       : {BASH_EXE}", flush=True)
         print(f"In {len(client.guilds)} guild(s):", flush=True)
         for g in client.guilds:
             print(f"  - {g.name} (id {g.id})", flush=True)
