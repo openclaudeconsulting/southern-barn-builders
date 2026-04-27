@@ -250,15 +250,24 @@ def build_cmd_args(quote: dict) -> list[str]:
         "--kit-desc", quote["kit_desc"],
         "--output", str(output_path),
     ]
-    # Explicit split vs combined subtotal — prefer explicit when both given
+    # Pricing mode — pick the most explicit data Claude returned:
+    #   1. Both kit + labor → pass both, no randomization.
+    #   2. Kit only → pass --kit-price; the script uses its default labor
+    #      (~$5,487.50). This handles "Kit 9000" posts where Carson didn't
+    #      list a separate labor figure.
+    #   3. Subtotal only → pass --subtotal; the script splits kit/labor.
+    #   4. Nothing → raise (caller turns this into a ❌ reaction in Discord).
     kit_price = quote.get("kit_price")
     labor_price = quote.get("labor_price")
+    subtotal = quote.get("subtotal")
     if kit_price is not None and labor_price is not None:
         args += ["--kit-price", str(kit_price), "--labor-price", str(labor_price)]
-    elif quote.get("subtotal") is not None:
-        args += ["--subtotal", str(quote["subtotal"])]
+    elif kit_price is not None:
+        args += ["--kit-price", str(kit_price)]
+    elif subtotal is not None:
+        args += ["--subtotal", str(subtotal)]
     else:
-        raise ValueError("Quote has neither explicit kit+labor split nor subtotal")
+        raise ValueError("Quote is missing a price (need kit_price, labor_price, or subtotal)")
     if quote.get("first_name"):
         args += ["--first-name", quote["first_name"]]
     qty = quote.get("quantity")
@@ -392,9 +401,14 @@ def build_bot(env: dict, claude_client: Anthropic) -> discord.Client:
         all_ok = True
         summary_lines = []
         for q in quotes:
-            args = build_cmd_args(q)
-            success, output = await asyncio.to_thread(run_full_quote, args)
             label = q.get("variant_label") or q.get("name", "quote")
+            try:
+                args = build_cmd_args(q)
+            except Exception as e:
+                all_ok = False
+                summary_lines.append(f"❌ {label}: couldn't build quote — {type(e).__name__}: {e}")
+                continue
+            success, output = await asyncio.to_thread(run_full_quote, args)
             if success:
                 append_invoice_log({
                     "invoice_num": invoice_num_from_args(args),
