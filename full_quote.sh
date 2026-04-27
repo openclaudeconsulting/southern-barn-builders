@@ -168,7 +168,7 @@ Thanks $FIRST_NAME — looking forward to building for you.
 Carson
 GNP Steel Trusses
 (352) 646-9090
-southern.barn.services@gmail.com"
+gnp-steel-trusses@gmail.com"
 
 echo ""
 echo "Creating Gmail draft..."

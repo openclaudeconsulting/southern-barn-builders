@@ -309,12 +309,19 @@ def build_cmd_args(quote: dict) -> list[str]:
     return args
 
 
+_CREATE_NO_WINDOW = 0x08000000 if sys.platform == "win32" else 0
+
+
 def run_full_quote(args: list[str]) -> tuple[bool, str]:
     """Run full_quote.sh with args once. Returns (success, combined_output).
 
     No retry — full_quote.sh isn't idempotent (each run posts a fresh Discord
     message), so retrying after a partial failure (e.g. Gmail step rejected
     a malformed email) would duplicate the PDF in #invoices.
+
+    creationflags=CREATE_NO_WINDOW prevents the brief black cmd window that
+    Windows would otherwise pop up every time bash (or any of its child
+    processes — chrome, curl, python) is spawned.
     """
     try:
         result = subprocess.run(
@@ -322,6 +329,7 @@ def run_full_quote(args: list[str]) -> tuple[bool, str]:
             capture_output=True,
             text=True,
             timeout=180,
+            creationflags=_CREATE_NO_WINDOW,
         )
         output = result.stdout + ("\n" + result.stderr if result.stderr else "")
         return (result.returncode == 0), output
