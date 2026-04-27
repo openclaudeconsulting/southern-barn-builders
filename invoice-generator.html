@@ -272,21 +272,15 @@ body {
   align-items: center;
   gap: 16px;
 }
-.inv-brand-mark {
-  width: 56px;
-  height: 56px;
-  background: linear-gradient(135deg, var(--pc-amber-light) 0%, var(--pc-amber) 55%, var(--pc-amber-dark) 100%);
+.inv-brand-logo {
+  height: 96px;
+  width: auto;
+  display: block;
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--pc-navy-dark);
-  letter-spacing: 0.5px;
+  background: #fbf6ec;
+  padding: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
   flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(199, 125, 31, 0.3);
 }
 .inv-brand-text h2 {
   font-family: var(--font-serif);
@@ -858,11 +852,7 @@ function render() {
   document.getElementById('invoicePreview').innerHTML = `
     <div class="inv-header">
       <div class="inv-brand">
-        <div class="inv-brand-mark">PC</div>
-        <div class="inv-brand-text">
-          <h2>G&P Steel Trusses</h2>
-          <p>Commercial &amp; Residential</p>
-        </div>
+        <img class="inv-brand-logo" src="images/logo-gp.png" alt="G&amp;P Steel Trusses — Commercial &amp; Residential" />
       </div>
       <div class="inv-title">
         <h1>${/(^|[-_])Q[-_]?/i.test(num) ? 'QUOTE' : 'INVOICE'}</h1>
