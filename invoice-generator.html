@@ -306,18 +306,12 @@ body {
   color: var(--sb-gold);
   line-height: 1;
   margin-bottom: 4px;
-  /* Black outline (faked with text-shadow so it renders in Chrome headless
-     PDF the same as in the live preview) plus a subtle drop shadow. */
-  text-shadow:
-    -1.5px -1.5px 0 #000,
-     1.5px -1.5px 0 #000,
-    -1.5px  1.5px 0 #000,
-     1.5px  1.5px 0 #000,
-       -2px    0  0 #000,
-        2px    0  0 #000,
-         0   -2px 0 #000,
-         0    2px 0 #000,
-         0    4px 6px rgba(0, 0, 0, 0.45);
+  /* Hairline black outline + barely-there drop shadow.
+     paint-order ensures the stroke sits OUTSIDE the fill so the letters
+     don't look thinned out. Chrome headless honors both rules in PDF. */
+  -webkit-text-stroke: 0.5px #000;
+  paint-order: stroke fill;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
 }
 .inv-title p {
   font-size: 13px;
