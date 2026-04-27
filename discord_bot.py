@@ -57,6 +57,24 @@ def resolve_bash() -> str:
 
 BASH_EXE = resolve_bash()
 
+
+# ---------- Email validation ----------
+# Conservative pattern: at least one char before @, at least one char in
+# domain, a dot, and a 2+ letter TLD. Rejects malformed inputs Gmail's API
+# would reject anyway ("Mr nelson@fencebuilder", trailing newlines, etc.) so
+# the email step gets skipped cleanly instead of failing the whole pipeline.
+_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+
+
+def sanitize_email(raw: object) -> str:
+    """Return a trimmed email if it looks valid, else ''."""
+    if not isinstance(raw, str):
+        return ""
+    s = raw.strip()
+    if _EMAIL_RE.match(s):
+        return s
+    return ""
+
 # Force UTF-8 stdout/stderr so emoji characters in Discord messages don't
 # crash the Windows cp1252 console when printed.
 try:
@@ -243,7 +261,7 @@ def build_cmd_args(quote: dict) -> list[str]:
 
     args = [
         "--name", name,
-        "--email", quote.get("email", "") or "",
+        "--email", sanitize_email(quote.get("email")),
         "--city", quote.get("city", "") or "",
         "--state", quote.get("state", "") or "",
         "--num", num,
@@ -291,39 +309,26 @@ def build_cmd_args(quote: dict) -> list[str]:
     return args
 
 
-def run_full_quote(args: list[str], max_attempts: int = 2) -> tuple[bool, str]:
-    """Run full_quote.sh with args. Retries once on failure with a 5s backoff
-    so transient hiccups (HTTP server cold-start race, Chrome startup blip,
-    momentary file lock) don't surface as ❌ to Carson. The same invoice number
-    is reused across retries — a failed attempt doesn't post anything, so the
-    retry just lands on Discord with the original number.
+def run_full_quote(args: list[str]) -> tuple[bool, str]:
+    """Run full_quote.sh with args once. Returns (success, combined_output).
 
-    Returns (success, combined_output).
+    No retry — full_quote.sh isn't idempotent (each run posts a fresh Discord
+    message), so retrying after a partial failure (e.g. Gmail step rejected
+    a malformed email) would duplicate the PDF in #invoices.
     """
-    last_output = ""
-    for attempt in range(1, max_attempts + 1):
-        try:
-            result = subprocess.run(
-                [BASH_EXE, str(FULL_QUOTE_SCRIPT), *args],
-                capture_output=True,
-                text=True,
-                timeout=180,
-            )
-            last_output = result.stdout + ("\n" + result.stderr if result.stderr else "")
-            if result.returncode == 0:
-                if attempt > 1:
-                    print(f"  -> succeeded on attempt {attempt}", flush=True)
-                return True, last_output
-            print(f"  -> attempt {attempt}/{max_attempts} failed (rc={result.returncode})", flush=True)
-        except subprocess.TimeoutExpired:
-            last_output = f"Timed out after 180 seconds (attempt {attempt})."
-            print(f"  -> attempt {attempt}/{max_attempts} timed out", flush=True)
-        except Exception as e:
-            last_output = f"Unexpected error on attempt {attempt}: {type(e).__name__}: {e}"
-            print(f"  -> attempt {attempt}/{max_attempts} crashed: {e}", flush=True)
-        if attempt < max_attempts:
-            time.sleep(5)
-    return False, last_output
+    try:
+        result = subprocess.run(
+            [BASH_EXE, str(FULL_QUOTE_SCRIPT), *args],
+            capture_output=True,
+            text=True,
+            timeout=180,
+        )
+        output = result.stdout + ("\n" + result.stderr if result.stderr else "")
+        return (result.returncode == 0), output
+    except subprocess.TimeoutExpired:
+        return False, "Timed out after 180 seconds."
+    except Exception as e:
+        return False, f"Unexpected error: {type(e).__name__}: {e}"
 
 
 # ---------- Discord bot ----------
