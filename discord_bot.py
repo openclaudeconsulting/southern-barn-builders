@@ -21,6 +21,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -281,21 +282,39 @@ def build_cmd_args(quote: dict) -> list[str]:
     return args
 
 
-def run_full_quote(args: list[str]) -> tuple[bool, str]:
-    """Run full_quote.sh with args. Returns (success, combined_output)."""
-    try:
-        result = subprocess.run(
-            [BASH_EXE, str(FULL_QUOTE_SCRIPT), *args],
-            capture_output=True,
-            text=True,
-            timeout=180,
-        )
-        output = result.stdout + ("\n" + result.stderr if result.stderr else "")
-        return (result.returncode == 0), output
-    except subprocess.TimeoutExpired:
-        return False, "Timed out after 180 seconds."
-    except Exception as e:
-        return False, f"Unexpected error: {e}"
+def run_full_quote(args: list[str], max_attempts: int = 2) -> tuple[bool, str]:
+    """Run full_quote.sh with args. Retries once on failure with a 5s backoff
+    so transient hiccups (HTTP server cold-start race, Chrome startup blip,
+    momentary file lock) don't surface as ❌ to Carson. The same invoice number
+    is reused across retries — a failed attempt doesn't post anything, so the
+    retry just lands on Discord with the original number.
+
+    Returns (success, combined_output).
+    """
+    last_output = ""
+    for attempt in range(1, max_attempts + 1):
+        try:
+            result = subprocess.run(
+                [BASH_EXE, str(FULL_QUOTE_SCRIPT), *args],
+                capture_output=True,
+                text=True,
+                timeout=180,
+            )
+            last_output = result.stdout + ("\n" + result.stderr if result.stderr else "")
+            if result.returncode == 0:
+                if attempt > 1:
+                    print(f"  -> succeeded on attempt {attempt}", flush=True)
+                return True, last_output
+            print(f"  -> attempt {attempt}/{max_attempts} failed (rc={result.returncode})", flush=True)
+        except subprocess.TimeoutExpired:
+            last_output = f"Timed out after 180 seconds (attempt {attempt})."
+            print(f"  -> attempt {attempt}/{max_attempts} timed out", flush=True)
+        except Exception as e:
+            last_output = f"Unexpected error on attempt {attempt}: {type(e).__name__}: {e}"
+            print(f"  -> attempt {attempt}/{max_attempts} crashed: {e}", flush=True)
+        if attempt < max_attempts:
+            time.sleep(5)
+    return False, last_output
 
 
 # ---------- Discord bot ----------
