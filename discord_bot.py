@@ -139,7 +139,7 @@ def load_api_key():
 
 # ---------- Invoice numbering ----------
 STARTING_INVOICE = 11  # Last manually-assigned was SBB-Q-011 (Art Johnson)
-INVOICE_PREFIX = "GP-Q"  # Brand-matched prefix (was SBB-Q under prior brand)
+INVOICE_PREFIX = "GNP-Q"  # Brand-matched prefix (was SBB-Q under prior brand)
 
 def next_invoice_num():
     if INVOICE_COUNTER_FILE.exists():
@@ -155,7 +155,7 @@ def next_invoice_num():
 
 
 # ---------- Claude parser ----------
-PARSE_SYSTEM_PROMPT = """You are a parser for G&P Steel Trusses customer quote requests posted in a Discord channel by Carson (the sales rep).
+PARSE_SYSTEM_PROMPT = """You are a parser for GNP Steel Trusses customer quote requests posted in a Discord channel by Carson (the sales rep).
 
 Your job: read Carson's free-form message and return STRICT JSON describing one or more quotes to generate.
 
@@ -235,7 +235,7 @@ TWENTY_SIX_GA_NOTES = (
     "Concrete and rebar are not included unless listed as a line item. Balance due at project completion. We accept check, cash, Zelle, or bank transfer.\n\n"
     "26ga pricing reflects current manufacturer inquiry rates and may adjust at order time. "
     "Ridge caps, eve drips, and eve trims are 26ga standard on every build (no upcharge). "
-    "Thank you for choosing G&P Steel Trusses."
+    "Thank you for choosing GNP Steel Trusses."
 )
 
 TWENTY_FT_NOTES = (
@@ -244,7 +244,7 @@ TWENTY_FT_NOTES = (
     "Pricing on structures 20' or taller is subject to manufacturer confirmation prior to order. "
     "Irregular sizes are affected by supply-chain and material-availability fluctuations; "
     "final price will be confirmed before the deposit is processed. "
-    "Thank you for choosing G&P Steel Trusses."
+    "Thank you for choosing GNP Steel Trusses."
 )
 
 

@@ -131,12 +131,12 @@ elif [[ -n "$CITY" ]]; then
   LOCATION_LINE=" for your project in $CITY"
 fi
 
-SUBJECT="Your Pole Barn $([ "$DOC_TYPE" = "QUOTE" ] && echo Quote || echo Invoice) — $KIT_DESC | G&P Steel Trusses"
+SUBJECT="Your Pole Barn $([ "$DOC_TYPE" = "QUOTE" ] && echo Quote || echo Invoice) — $KIT_DESC | GNP Steel Trusses"
 
 # Trim KIT_DESC for subject (just take the dimensions if it's long)
 SHORT_KIT=$(echo "$KIT_DESC" | grep -oE '[0-9]+x[0-9]+(x[0-9]+)?' | head -1)
 if [[ -n "$SHORT_KIT" ]]; then
-  SUBJECT="Your Pole Barn $([ "$DOC_TYPE" = "QUOTE" ] && echo Quote || echo Invoice) — ${SHORT_KIT} | G&P Steel Trusses"
+  SUBJECT="Your Pole Barn $([ "$DOC_TYPE" = "QUOTE" ] && echo Quote || echo Invoice) — ${SHORT_KIT} | GNP Steel Trusses"
 fi
 
 QTY_PHRASE=""
@@ -166,7 +166,7 @@ Take a look at the attached $([ "$DOC_TYPE" = "QUOTE" ] && echo quote || echo in
 Thanks $FIRST_NAME — looking forward to building for you.
 
 Carson
-G&P Steel Trusses
+GNP Steel Trusses
 (352) 646-9090
 southern.barn.services@gmail.com"
 

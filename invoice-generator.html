@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Invoicer Pro — G&P Steel Trusses</title>
+<title>Invoicer Pro — GNP Steel Trusses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <style>
-/* ---------- Tokens (G&P Steel Trusses — navy + amber) ---------- */
+/* ---------- Tokens (GNP Steel Trusses — navy + amber) ---------- */
 :root {
   --pc-navy: #14304f;
   --pc-navy-dark: #0c1e33;
@@ -595,7 +595,7 @@ body {
   <!-- ===== SIDEBAR FORM ===== -->
   <div class="sidebar">
     <h1>Invoicer Pro</h1>
-    <p class="subtitle">G&P Steel Trusses</p>
+    <p class="subtitle">GNP Steel Trusses</p>
 
     <h2>Invoice Details</h2>
     <div class="field-row">
@@ -669,7 +669,7 @@ body {
 
 Balance is due upon project completion. We accept check, cash, Zelle, or bank transfer.
 
-This price includes all pole barn kit materials, all taxes on materials, and installation. Thank you for choosing G&P Steel Trusses.</textarea>
+This price includes all pole barn kit materials, all taxes on materials, and installation. Thank you for choosing GNP Steel Trusses.</textarea>
     </div>
 
     <button class="btn btn-print" onclick="downloadPdf()">
@@ -852,7 +852,7 @@ function render() {
   document.getElementById('invoicePreview').innerHTML = `
     <div class="inv-header">
       <div class="inv-brand">
-        <img class="inv-brand-logo" src="images/logo-gp.png" alt="G&amp;P Steel Trusses — Commercial &amp; Residential" />
+        <img class="inv-brand-logo" src="images/logo-gnp.png" alt="GNP Steel Trusses — Commercial &amp; Residential" />
       </div>
       <div class="inv-title">
         <h1>${/(^|[-_])Q[-_]?/i.test(num) ? 'QUOTE' : 'INVOICE'}</h1>
@@ -949,7 +949,7 @@ function render() {
     </div>
 
     <div class="inv-bottom-strip">
-      <span>G&P Steel Trusses &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Commercial &amp; Residential</span>
+      <span>GNP Steel Trusses &nbsp;&bull;&nbsp; Licensed &amp; Insured &nbsp;&bull;&nbsp; Commercial &amp; Residential</span>
       <span>(352) 646-9090 &nbsp;&bull;&nbsp; <a href="mailto:Southern.Barn.Services@gmail.com">Southern.Barn.Services@gmail.com</a></span>
     </div>
   `;

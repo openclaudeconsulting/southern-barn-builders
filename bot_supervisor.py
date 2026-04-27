@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Supervisor for the G&P Steel Trusses Discord quote bot.
+Supervisor for the GNP Steel Trusses Discord quote bot.
 
 Starts (and keeps alive) two long-running processes:
 

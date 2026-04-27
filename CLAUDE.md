@@ -1,18 +1,18 @@
-# Project Briefing — G&P Steel Trusses Website
+# Project Briefing — GNP Steel Trusses Website
 
 This file is auto-loaded by Claude Code. It orients you to the project without needing to re-read every file.
 
 ## What this is
 
-A static marketing website for **G&P Steel Trusses**, a commercial and residential pole-barn-structure specialist serving Florida and South Georgia. G&P fabricates, supplies, and installs pole-barn structures — **barns, barndominiums, stables, workshops, garages, and custom pole-barn builds**. That's the entire scope — do NOT advertise roofing, fencing, porches, decks, or steps as standalone services. Audience is homeowners, ranchers, landowners, and commercial clients.
+A static marketing website for **GNP Steel Trusses**, a commercial and residential pole-barn-structure specialist serving Florida and South Georgia. GNP fabricates, supplies, and installs pole-barn structures — **barns, barndominiums, stables, workshops, garages, and custom pole-barn builds**. That's the entire scope — do NOT advertise roofing, fencing, porches, decks, or steps as standalone services. Audience is homeowners, ranchers, landowners, and commercial clients.
 
 ## Important — sales-rep arrangement
 
-The site owner is NOT G&P Steel Trusses. The owner runs a sales/referral operation: leads are captured through this site and referred to G&P for fulfillment. The owner keeps the margin above G&P's cost. Therefore:
+The site owner is NOT GNP Steel Trusses. The owner runs a sales/referral operation: leads are captured through this site and referred to GNP for fulfillment. The owner keeps the margin above GNP's cost. Therefore:
 
 - Contact info on the site must always be the owner's: **(352) 646-9090** and **Southern.Barn.Services@gmail.com** — so leads flow through the owner.
-- Do NOT put G&P's or any subcontractor's internal phone numbers anywhere.
-- The brand and service lineup belong to G&P Steel Trusses. No official logo yet — header uses a text "G&P" monogram + wordmark as placeholder.
+- Do NOT put GNP's or any subcontractor's internal phone numbers anywhere.
+- The brand and service lineup belong to GNP Steel Trusses. No official logo yet — header uses a text "GNP" monogram + wordmark as placeholder.
 
 ## Stack
 
@@ -73,7 +73,7 @@ Confident, grounded, plainspoken. Think "family-owned general contractor who sho
 
 - **Shared header/footer is duplicated across pages** (there is no template engine). If you add a nav link, update it on every `.html` file including `404.html`.
 - The `class="active"` attribute on the nav anchor marks the current page — preserve this per-page.
-- The brand header is a text placeholder: `<span class="brand-mark">G&amp;P</span>` (navy gradient monogram box) + `<span class="brand-text">` wrapper containing `.brand-name` and `.brand-tag`. When a real logo is provided, swap this for an `<img class="brand-logo">` and the existing `.brand-logo` CSS rule will style it.
+- The brand header is a text placeholder: `<span class="brand-mark">GNP</span>` (navy gradient monogram box) + `<span class="brand-text">` wrapper containing `.brand-name` and `.brand-tag`. When a real logo is provided, swap this for an `<img class="brand-logo">` and the existing `.brand-logo` CSS rule will style it.
 - Void elements use the self-closing slash (`<meta ... />`, `<link ... />`).
 - CSS is a single file. New components should use existing `--pc-*` tokens and the `.card` / `.grid-N` / `.section.block` patterns rather than one-off styles.
 
@@ -85,5 +85,5 @@ See `DEPLOY.md`. Summary: push to GitHub → connected Cloudflare Pages project 
 
 - Don't add a JavaScript framework "just in case"
 - Don't add analytics or tracking scripts without confirming privacy stance with the owner
-- Don't replace contact info with any G&P internal number or email — leads must flow through the owner's contact info
+- Don't replace contact info with any GNP internal number or email — leads must flow through the owner's contact info
 - Don't inline images as base64; keep them in `images/`

@@ -2,7 +2,7 @@
 # Removes the auto-start scheduled task and stops the running supervisor/bot.
 
 $ErrorActionPreference = 'Continue'
-$TaskName = 'GPSteelTrussesQuoteBot'
+$TaskName = 'GNPSteelTrussesQuoteBot'
 
 if (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue) {
   Write-Host "Stopping and removing scheduled task '$TaskName'..."

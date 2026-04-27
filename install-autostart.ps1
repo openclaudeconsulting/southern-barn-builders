@@ -9,7 +9,7 @@
 
 $ErrorActionPreference = 'Stop'
 
-$TaskName    = 'GPSteelTrussesQuoteBot'
+$TaskName    = 'GNPSteelTrussesQuoteBot'
 $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
 $Supervisor  = Join-Path $ScriptDir 'bot_supervisor.py'
 
@@ -73,7 +73,7 @@ Register-ScheduledTask `
   -Trigger     $Trigger `
   -Settings    $Settings `
   -Principal   $Principal `
-  -Description 'Auto-starts the G&P Steel Trusses Discord quote bot + local HTTP server at user logon.' | Out-Null
+  -Description 'Auto-starts the GNP Steel Trusses Discord quote bot + local HTTP server at user logon.' | Out-Null
 
 Write-Host "Registered task '$TaskName' (trigger: at user logon)." -ForegroundColor Green
 Write-Host ""
