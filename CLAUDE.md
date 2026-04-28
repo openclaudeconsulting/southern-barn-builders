@@ -10,7 +10,7 @@ A static marketing website for **GNP Steel Trusses**, a commercial and residenti
 
 The site owner is NOT GNP Steel Trusses. The owner runs a sales/referral operation: leads are captured through this site and referred to GNP for fulfillment. The owner keeps the margin above GNP's cost. Therefore:
 
-- Contact info on the site must always be the owner's: **(352) 646-9090** and **Southern.Barn.Services@gmail.com** — so leads flow through the owner.
+- Contact info on the site must always be the owner's: **(352) 646-9090** and **GNPSteelTrusses@gmail.com** (the public-facing brand mailbox) — so leads flow through the owner.
 - Do NOT put GNP's or any subcontractor's internal phone numbers anywhere.
 - The brand and service lineup belong to GNP Steel Trusses. No official logo yet — header uses a text "GNP" monogram + wordmark as placeholder.
 
@@ -19,7 +19,9 @@ The site owner is NOT GNP Steel Trusses. The owner runs a sales/referral operati
 - Plain HTML + CSS. No build step. No framework.
 - Google Fonts (Montserrat + Inter) loaded from CDN.
 - Deployed on **Cloudflare Pages**, git-connected to GitHub. Live at `https://southbarnservices.com` (domain kept from prior brand).
-- Quote form submits via **Formsubmit.co** → `southernbarnservices@gmail.com` (Gmail ignores dots, so mail still lands in the canonical `Southern.Barn.Services@gmail.com` inbox).
+- Customer-facing email displayed in topbars / footers / `mailto:` links / Schema.org JSON-LD: **GNPSteelTrusses@gmail.com**.
+- Quote form backend (Formsubmit.co) still posts to `southernbarnservices@gmail.com` — that endpoint was already verified with Formsubmit and routes to the legacy inbox the user owns. To change the form-route mailbox you have to update `contact.html`'s `<form action>` AND have the user click a verification email Formsubmit sends to the new address.
+- Bot's Gmail-draft pipeline (`send_email.py` + OAuth `token.json` in the parent dir) is authorized against the legacy account; switching it requires re-running the OAuth flow against the new mailbox.
 
 ## File map
 

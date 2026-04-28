@@ -53,7 +53,7 @@ See [`DEPLOY.md`](./DEPLOY.md). Short version: push to GitHub, connect the repo 
 - Hero / About photos — also Unsplash; replace when ready
 - License numbers — add to footer / about page once confirmed
 
-Real contact info (`(352) 646-9090` / `southern.barn.services@gmail.com`) is already wired throughout.
+Real contact info is already wired throughout: phone `(352) 646-9090`, public-facing email `GNPSteelTrusses@gmail.com`. The contact form's Formsubmit backend still posts to `southernbarnservices@gmail.com` — that endpoint was already verified, so leads route correctly while the brand-matched email is what customers see.
 
 ## Brand system
 
