@@ -415,6 +415,11 @@ def build_bot(env: dict, claude_client: Anthropic) -> discord.Client:
         summary_lines = []
         for q in quotes:
             label = q.get("variant_label") or q.get("name", "quote")
+            # Detect "Claude returned an email but it failed validation" so the
+            # Discord reply can call this out explicitly (otherwise the bot
+            # looks like it silently skipped a perfectly good email).
+            raw_email = (q.get("email") or "").strip() if isinstance(q.get("email"), str) else ""
+            email_was_malformed = bool(raw_email) and not sanitize_email(raw_email)
             try:
                 args = build_cmd_args(q)
             except Exception as e:
@@ -447,6 +452,12 @@ def build_bot(env: dict, claude_client: Anthropic) -> discord.Client:
                     email_status = "drafted"
                 elif "SENT. Message id" in output:
                     email_status = "sent"
+                elif email_was_malformed:
+                    email_status = (
+                        f"draft skipped — `{raw_email}` is not a valid email "
+                        f"(missing TLD/domain?). Fix the address and repost, "
+                        f"or draft the email manually."
+                    )
                 elif "No customer email provided" in output or "skipping email" in output.lower():
                     email_status = "no email provided — draft skipped"
                 elif "ERROR from Gmail" in output or "Invalid To" in output:
