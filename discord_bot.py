@@ -437,7 +437,23 @@ def build_bot(env: dict, claude_client: Anthropic) -> discord.Client:
                     "variant_label": q.get("variant_label"),
                     "created_at": datetime.now(timezone.utc).isoformat(),
                 })
-                summary_lines.append(f"✅ {label}: generated + posted + drafted")
+                # Report what actually happened with the email step.
+                # full_quote.sh prints distinct strings for each path:
+                #   "DRAFT created."                  → real Gmail draft made
+                #   "SENT. Message id:"               → email sent (--send mode)
+                #   "No customer email provided"      → email step skipped
+                #   "ERROR from Gmail API"            → OAuth or API failure
+                if "DRAFT created" in output:
+                    email_status = "drafted"
+                elif "SENT. Message id" in output:
+                    email_status = "sent"
+                elif "No customer email provided" in output or "skipping email" in output.lower():
+                    email_status = "no email provided — draft skipped"
+                elif "ERROR from Gmail" in output or "Invalid To" in output:
+                    email_status = "❗ email step FAILED — see bot.log (likely OAuth needs refresh)"
+                else:
+                    email_status = "email status unknown"
+                summary_lines.append(f"✅ {label}: PDF generated + posted to #invoices · {email_status}")
             else:
                 all_ok = False
                 tail = output.strip().splitlines()[-5:]

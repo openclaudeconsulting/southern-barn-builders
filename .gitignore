@@ -47,3 +47,4 @@ images/_original_backup/
 # Logs
 *.log
 npm-debug.log*
+.supervisor.lock

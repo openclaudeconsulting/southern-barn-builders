@@ -54,10 +54,14 @@ $Trigger = New-ScheduledTaskTrigger -AtLogOn -User $env:USERNAME
 
 # Settings: keep it lean. Auto-restart if it fails. Don't kill on battery.
 # Don't impose an execution time limit (the bot is meant to run forever).
+# MultipleInstances=IgnoreNew prevents Windows from launching a second
+# supervisor on top of one already running (which used to cause duplicate
+# Discord reactions / quote PDFs).
 $Settings = New-ScheduledTaskSettingsSet `
   -AllowStartIfOnBatteries `
   -DontStopIfGoingOnBatteries `
   -StartWhenAvailable `
+  -MultipleInstances IgnoreNew `
   -RestartCount 3 `
   -RestartInterval (New-TimeSpan -Minutes 1) `
   -ExecutionTimeLimit (New-TimeSpan -Days 0)

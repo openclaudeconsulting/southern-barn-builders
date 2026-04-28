@@ -30,6 +30,7 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 LOG_FILE = SCRIPT_DIR / "bot.log"
+LOCK_FILE = SCRIPT_DIR / ".supervisor.lock"
 HTTP_PORT = 8080
 RESTART_DELAY_SECONDS = 10
 HTTP_STARTUP_TIMEOUT_SECONDS = 10
@@ -108,11 +109,59 @@ def run_bot_loop() -> None:
         time.sleep(RESTART_DELAY_SECONDS)
 
 
+def acquire_singleton_lock() -> None:
+    """Ensure only one supervisor runs at a time.
+
+    Writes our PID to .supervisor.lock. If the file already exists and the
+    PID inside is alive, exit immediately — another supervisor is already
+    running. Stale locks (PID is gone) are reclaimed.
+    """
+    if LOCK_FILE.exists():
+        try:
+            existing_pid = int(LOCK_FILE.read_text().strip())
+        except (OSError, ValueError):
+            existing_pid = 0
+        if existing_pid and _pid_alive(existing_pid):
+            log(f"Another supervisor is already running (pid {existing_pid}). Exiting.")
+            sys.exit(0)
+        log(f"Stale lock from pid {existing_pid} found — reclaiming.")
+    LOCK_FILE.write_text(str(os.getpid()))
+
+
+def _pid_alive(pid: int) -> bool:
+    """Cross-platform check for whether a PID is currently running."""
+    if pid <= 0:
+        return False
+    if sys.platform == "win32":
+        # Use tasklist (no admin needed) to check; cheap and reliable.
+        try:
+            result = subprocess.run(
+                ["tasklist", "/FI", f"PID eq {pid}", "/NH"],
+                capture_output=True, text=True, creationflags=CREATE_NO_WINDOW,
+            )
+            return str(pid) in result.stdout
+        except Exception:
+            return False
+    try:
+        os.kill(pid, 0)
+        return True
+    except (OSError, ProcessLookupError):
+        return False
+
+
 def main() -> None:
     log("=" * 60)
-    log(f"Supervisor starting up (Python {sys.version.split()[0]}).")
+    log(f"Supervisor starting up (Python {sys.version.split()[0]}, pid {os.getpid()}).")
+    acquire_singleton_lock()
     start_http_server()
-    run_bot_loop()
+    try:
+        run_bot_loop()
+    finally:
+        try:
+            if LOCK_FILE.exists() and LOCK_FILE.read_text().strip() == str(os.getpid()):
+                LOCK_FILE.unlink()
+        except OSError:
+            pass
 
 
 if __name__ == "__main__":
