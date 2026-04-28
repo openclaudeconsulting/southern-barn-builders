@@ -114,7 +114,11 @@ def acquire_singleton_lock() -> None:
 
     Writes our PID to .supervisor.lock. If the file already exists and the
     PID inside is alive, exit immediately — another supervisor is already
-    running. Stale locks (PID is gone) are reclaimed.
+    running. Stale locks (PID is gone) are reclaimed AFTER killing any
+    orphaned children (the prior supervisor's discord_bot / http.server
+    processes don't die automatically when their parent does on Windows;
+    if we don't reap them now, they keep listening to Discord and we get
+    duplicate ✅ reactions / duplicate Gmail drafts per post).
     """
     if LOCK_FILE.exists():
         try:
@@ -125,7 +129,50 @@ def acquire_singleton_lock() -> None:
             log(f"Another supervisor is already running (pid {existing_pid}). Exiting.")
             sys.exit(0)
         log(f"Stale lock from pid {existing_pid} found — reclaiming.")
+        kill_orphan_bot_children()
+    else:
+        # Even with no lock file, a previous run may have left orphans (e.g.
+        # supervisor was killed before it could write the lock). Reap anyway.
+        kill_orphan_bot_children()
     LOCK_FILE.write_text(str(os.getpid()))
+
+
+def kill_orphan_bot_children() -> None:
+    """Find and kill any pythonw/python processes that look like a stale bot
+    or http server from a prior supervisor run. Identified by command line
+    (cheap and reliable) — we don't try to reason about parent PIDs since
+    those are unreliable once the parent has exited."""
+    if sys.platform != "win32":
+        return
+    try:
+        my_pid = os.getpid()
+        # WMIC is deprecated but still on Windows 10/11 by default.
+        # Use PowerShell as a fallback if WMIC is missing.
+        ps_cmd = (
+            "Get-CimInstance Win32_Process | "
+            "Where-Object { $_.CommandLine -and "
+            "($_.CommandLine -match 'discord_bot\\.py' -or "
+            "$_.CommandLine -match 'http\\.server.*8080') } | "
+            "Select-Object -ExpandProperty ProcessId"
+        )
+        result = subprocess.run(
+            ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", ps_cmd],
+            capture_output=True, text=True, creationflags=CREATE_NO_WINDOW, timeout=10,
+        )
+        for line in result.stdout.splitlines():
+            line = line.strip()
+            if not line.isdigit():
+                continue
+            pid = int(line)
+            if pid == my_pid:
+                continue
+            log(f"Killing orphan bot/http-server pid {pid}.")
+            subprocess.run(
+                ["taskkill", "/F", "/PID", str(pid)],
+                capture_output=True, creationflags=CREATE_NO_WINDOW,
+            )
+    except Exception as e:
+        log(f"orphan reap failed (non-fatal): {type(e).__name__}: {e}")
 
 
 def _pid_alive(pid: int) -> bool:
